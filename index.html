@@ -197,7 +197,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            Startseite
           </a>
         </li>
       
@@ -207,7 +207,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            Archiv
           </a>
         </li>
       
@@ -240,6 +240,264 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/11/Python中巧妙内置函数分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈亚坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈亚坤的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/11/Python中巧妙内置函数分析/" itemprop="url">
+                  Unbenannt
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-11T23:47:40+08:00">
+                2017-06-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="python内置函数分析-1"><a href="#python内置函数分析-1" class="headerlink" title="python内置函数分析(1)"></a>python内置函数分析(1)</h1><blockquote>
+<p>PYTHON中内置了一些巧妙而强大的内置函数，熟练使用这些函数，代码不仅简洁易读了许多，既方便有减少了很多的BUG。</p>
+</blockquote>
+<p>##1.sorted()##</p>
+<p>###1)对一个列表进行排序###<br>    a = [100,82,12,55,45]<br>    sorted(a)</p>
+<pre><code>&gt;&gt;&gt;[12,45,55,88,100]
+</code></pre><p>###2)通过key参数/函数</p>
+<blockquote>
+<p>例：长列表中嵌套字典元素,按照每个元素的长度进行排序(这里使用匿名函数lambda)</p>
+</blockquote>
+<pre><code>list1 = [{2:6,8:2},{1:7},{1:2,5:12,9:2}]
+new_list = sorted(list1,key = lambda x:len(x))
+print(new_list)
+&gt;&gt;&gt;[{1: 7}, {8: 2, 2: 6}, {1: 2, 5: 12, 9: 2}]
+</code></pre><p>###3)对由tuple组成的list进行排序</p>
+<blockquote>
+<p>例：对一群人里面的年龄的list进行排序</p>
+</blockquote>
+<pre><code>people = [(&apos;laownag&apos;,&apos;man&apos;,&apos;23&apos;),(&apos;xiaoli&apos;,&apos;woman&apos;,&apos;21&apos;),(&apos;xiaozhang&apos;,&apos;man&apos;,&apos;17&apos;)]
+new_people = sorted(people,key = lambda x:x[2])
+print(new_people)
+&gt;&gt;&gt;[(&apos;xiaozhang&apos;, &apos;man&apos;, &apos;17&apos;), (&apos;xiaoli&apos;, &apos;woman&apos;, &apos;21&apos;), (&apos;laownag&apos;, &apos;man&apos;, &apos;23&apos;)]
+</code></pre><p>###4)用cmp函数排序</p>
+<blockquote>
+<p>python3中，cmp函数被operator模块取代，需要导入<br>cmp(x,y),如果x&gt;y,返回1，x&lt;y,返回-1，x==y,返回0</p>
+</blockquote>
+<pre><code>people = [(&apos;laownag&apos;,&apos;man&apos;,&apos;23&apos;),(&apos;xiaoli&apos;,&apos;woman&apos;,&apos;21&apos;),(&apos;xiaozhang&apos;,&apos;man&apos;,&apos;17&apos;)]
+new_people = sorted(people,cmp = lambda x，y:cmp(x[0],y[0])))
+print(new_people)
+&gt;&gt;&gt;[(&apos;laownag&apos;, &apos;man&apos;, &apos;23&apos;), (&apos;xiaoli&apos;, &apos;woman&apos;, &apos;21&apos;), (&apos;xiaozhang&apos;, &apos;man&apos;, &apos;17&apos;)]
+</code></pre><p>##2.map()</p>
+<blockquote>
+<p>map函数跟根据提供的函数对制定序列做排序，接受一个函数f和一个list，并把函数f以此作用于每个list函数，然后返回一个新的list,map的函数的参数可以为多个，<strong>注意:这个函数一定要有返回值</strong></p>
+</blockquote>
+<pre><code>def func(x):
+    return x*x
+print(map(func([1,2,3,4,5])))
+&gt;&gt;&gt;[1, 4, 9, 16, 25]
+</code></pre><p>&gt;</p>
+<pre><code>def add_x_y(x,y):
+return x+y
+print (map(add_x_y,[1,2,3,4,5],[2,3,4,5,6]))#必须len(x)==len(y)
+&gt;&gt;&gt;[3, 5, 7, 9, 11]
+</code></pre><p>##3.enumerate()</p>
+<blockquote>
+<p>enumerate函数用于遍历序列中的元素以及它们的下标,多用于在for循环中得到计数,enumerate参数为可遍历的变量，如 字符串，列表等</p>
+</blockquote>
+<pre><code>#enumerate函数定义
+def enumerate(collection): 
+    &apos;Generates an indexed series: (0,coll[0]), (1,coll[1]) ...&apos;   
+       i = 0 
+       it = iter(collection) #将参数转换为可迭代对象
+       while 1: 
+       yield (i, it.next()) #生成迭代器
+       i += 1
+</code></pre><p>&gt;</p>
+<pre><code>#代码实现1
+i = 0
+seq = [&apos;one&apos;, &apos;two&apos;, &apos;three&apos;]
+for element in seq:
+    print i, seq[i]
+    i += 1
+&gt;&gt;
+0 one
+1 two
+2 three
+</code></pre><p>&gt;</p>
+<pre><code>#代码实现2
+seq = [&apos;one&apos;, &apos;two&apos;, &apos;three&apos;]
+for i, element in enumerate(seq):
+    print i, seq[i]
+&gt;&gt;
+0 one
+1 two
+2 three
+</code></pre><p>&gt;</p>
+<pre><code>#代码实现3
+for i,j in enumerate(&apos;abc&apos;):
+print i,j
+
+&gt;&gt;
+0 a
+1 b
+2 c
+</code></pre><p>##4.zip()</p>
+<blockquote>
+<p>zip函数接收人一多个(包括0或1)序列作为参数，返回一个tuple</p>
+</blockquote>
+<pre><code>#示例1
+x=[1,2,3]
+y=[4,5,6]
+z=[7,8,9]
+xyz=zip(x,y,z)
+print(xyz)
+&gt;&gt;&gt;[(1, 4, 7), (2, 5, 8), (3, 6, 9)]
+</code></pre><p>&gt;</p>
+<pre><code>#示例2
+x = [1, 2, 3]
+y = [4, 5, 6, 7]
+xy = zip(x, y)
+print xy
+&gt;&gt;&gt;[(1, 4), (2, 5), (3, 6)]
+</code></pre><p>&gt;</p>
+<pre><code>#示例3
+x = [1, 2, 3]
+y = [4, 5, 6]
+z = [7, 8, 9]
+xyz = zip(x, y, z)
+u = zip(*xyz)
+print u
+&gt;&gt;&gt;[(1, 2, 3), (4, 5, 6), (7, 8, 9)]
+</code></pre><p>&gt;<br>一般认为这是一个unzip的过程，它的运行机制是这样的：<br>在运行zip(*xyz)之前，xyz的值是：[(1, 4, 7), (2, 5, 8), (3, 6, 9)]<br>那么，zip(*xyz) 等价于 zip((1, 4, 7), (2, 5, 8), (3, 6, 9))<br>所以，运行结果是：[(1, 2, 3), (4, 5, 6), (7, 8, 9)]</p>
+<pre><code>#示例4
+x = [1, 2, 3]
+r = zip(* [x] * 3)
+print r
+&gt;&gt;&gt;[(1, 1, 1), (2, 2, 2), (3, 3, 3)]
+</code></pre><p>&gt;<br>它的运行机制是这样的：<br>[x]生成一个列表的列表，它只有一个元素x<br>[x] * 3生成一个列表的列表，它有3个元素，[x, x, x]<br>zip(* [x] * 3)的意思就明确了，zip(x, x, x)  </p>
+<p>##5.filter()</p>
+<blockquote>
+<p>filter函数是接收一个字符串f,和一个list，这个函数是对每个函数进行判断返回True或者False,依次来过滤掉一些不符合条件的元素，返回符合元素的list.<strong>跟if判断添加list相似</strong></p>
+</blockquote>
+<pre><code>def is_num(x):
+    return x%2==0
+print(filter(is_num,[1,2,3,4,5,6,7]))
+&gt;&gt;&gt;[2, 4, 6]
+</code></pre><blockquote>
+<p>处理文件时，把一些不需要的空格，回车，空字符去掉</p>
+</blockquote>
+<pre><code>def is_not_empty(x):
+&apos;strip() 方法用于移除字符串头尾指定的字符（默认为空格）&apos;
+    return x in len(x.strip())&gt;0#不返回空列表
+print(filter(is_not_empty,[&apos;abc&apos;,&apos;&apos;,&apos;book&apos;,&apos;apple&apos;,&apos;\t&apos;,&apos;\n&apos;]))
+&gt;&gt;&gt; [&apos;abc&apos;, &apos;book&apos;, &apos;apple&apos;]
+</code></pre><p>###作者：陈亚坤</p>
+<p>###邮箱：cykstart@163.com</p>
+<p>###版权声明:本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
+<p>###参考资料链接:<br><a href="https://zhuanlan.zhihu.com/p/26097557" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/26097557</a><br><a href="http://www.cnblogs.com/frydsh/archive/2012/07/10/2585370.html" target="_blank" rel="external">http://www.cnblogs.com/frydsh/archive/2012/07/10/2585370.html</a><br><a href="http://www.pythontab.com/html/2016/pythonjichu_1213/1111.html" target="_blank" rel="external">http://www.pythontab.com/html/2016/pythonjichu_1213/1111.html</a>  </p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -287,7 +545,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-01T19:01:12+08:00">
                 2017-04-01
@@ -469,7 +727,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-28T18:51:51+08:00">
                 2017-03-28
@@ -768,7 +1026,7 @@ print ret
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-23T19:02:37+08:00">
                 2017-03-23
@@ -889,7 +1147,7 @@ print ret
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-23T18:44:43+08:00">
                 2017-03-23
@@ -1017,8 +1275,8 @@ print ret
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
-                <span class="site-state-item-name">posts</span>
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
           
@@ -1031,7 +1289,7 @@ print ret
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">1</span>
-                <span class="site-state-item-name">tags</span>
+                <span class="site-state-item-name">Tags</span>
               
             </div>
           
@@ -1081,7 +1339,7 @@ print ret
 
 
 <div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
