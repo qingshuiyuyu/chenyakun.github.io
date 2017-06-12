@@ -90,10 +90,10 @@
 <meta name="description" content="python内置函数分析(1)
 PYTHON中内置了一些巧妙而强大的内置函数，熟练使用这些函数，代码不仅简洁易读了许多，既方便有减少了很多的BUG。
 
-##1.sorted()##
-###1)对一个列表进行排序###    a = [100,82,12,55,45]    sorted(a)
+1.sorted()1)对一个列表进行排序a = [100,82,12,55,45]
+sorted(a)
 &amp;gt;&amp;gt;&amp;gt;[12,45,55,88,100]
-###2)通过key参数/函数### 例：长列">
+2)通过key参数/函数 例：长列表中嵌套字典元素,按照每个元素的长度进行排序(这">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python内置函数分析(1)">
 <meta property="og:url" content="http://yoursite.com/2017/06/11/Python中巧妙内置函数分析/index.html">
@@ -101,20 +101,20 @@ PYTHON中内置了一些巧妙而强大的内置函数，熟练使用这些函�
 <meta property="og:description" content="python内置函数分析(1)
 PYTHON中内置了一些巧妙而强大的内置函数，熟练使用这些函数，代码不仅简洁易读了许多，既方便有减少了很多的BUG。
 
-##1.sorted()##
-###1)对一个列表进行排序###    a = [100,82,12,55,45]    sorted(a)
+1.sorted()1)对一个列表进行排序a = [100,82,12,55,45]
+sorted(a)
 &amp;gt;&amp;gt;&amp;gt;[12,45,55,88,100]
-###2)通过key参数/函数### 例：长列">
-<meta property="og:updated_time" content="2017-06-12T00:56:19.521Z">
+2)通过key参数/函数 例：长列表中嵌套字典元素,按照每个元素的长度进行排序(这">
+<meta property="og:updated_time" content="2017-06-12T01:00:42.278Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python内置函数分析(1)">
 <meta name="twitter:description" content="python内置函数分析(1)
 PYTHON中内置了一些巧妙而强大的内置函数，熟练使用这些函数，代码不仅简洁易读了许多，既方便有减少了很多的BUG。
 
-##1.sorted()##
-###1)对一个列表进行排序###    a = [100,82,12,55,45]    sorted(a)
+1.sorted()1)对一个列表进行排序a = [100,82,12,55,45]
+sorted(a)
 &amp;gt;&amp;gt;&amp;gt;[12,45,55,88,100]
-###2)通过key参数/函数### 例：长列">
+2)通过key参数/函数 例：长列表中嵌套字典元素,按照每个元素的长度进行排序(这">
 
 
 
@@ -342,25 +342,25 @@ PYTHON中内置了一些巧妙而强大的内置函数，熟练使用这些函�
         <h1 id="python内置函数分析-1"><a href="#python内置函数分析-1" class="headerlink" title="python内置函数分析(1)"></a><strong>python内置函数分析(1)</strong></h1><blockquote>
 <p>PYTHON中内置了一些巧妙而强大的内置函数，熟练使用这些函数，代码不仅简洁易读了许多，既方便有减少了很多的BUG。</p>
 </blockquote>
-<p>##<strong>1.sorted()</strong>##</p>
-<p>###<strong>1)对一个列表进行排序</strong>###<br>    a = [100,82,12,55,45]<br>    sorted(a)</p>
-<pre><code>&gt;&gt;&gt;[12,45,55,88,100]
-</code></pre><p>###<strong>2)通过key参数/函数</strong>###<br> 例：长列表中嵌套字典元素,按照每个元素的长度进行排序(这里使用匿名函数lambda)</p>
+<h2 id="1-sorted"><a href="#1-sorted" class="headerlink" title="1.sorted()"></a><strong>1.sorted()</strong></h2><h3 id="1-对一个列表进行排序"><a href="#1-对一个列表进行排序" class="headerlink" title="1)对一个列表进行排序"></a><strong>1)对一个列表进行排序</strong></h3><pre><code>a = [100,82,12,55,45]
+sorted(a)
+&gt;&gt;&gt;[12,45,55,88,100]
+</code></pre><h3 id="2-通过key参数-函数"><a href="#2-通过key参数-函数" class="headerlink" title="2)通过key参数/函数"></a><strong>2)通过key参数/函数</strong></h3><p> 例：长列表中嵌套字典元素,按照每个元素的长度进行排序(这里使用匿名函数lambda)</p>
 <pre><code>list1 = [{2:6,8:2},{1:7},{1:2,5:12,9:2}]
 new_list = sorted(list1,key = lambda x:len(x))
 print(new_list)
 &gt;&gt;&gt;[{1: 7}, {8: 2, 2: 6}, {1: 2, 5: 12, 9: 2}]
-</code></pre><p>###3)对由tuple组成的list进行排序###<br>例：对一群人里面的年龄的list进行排序</p>
+</code></pre><h3 id="3-对由tuple组成的list进行排序"><a href="#3-对由tuple组成的list进行排序" class="headerlink" title="3)对由tuple组成的list进行排序"></a><strong>3)对由tuple组成的list进行排序</strong></h3><p>例：对一群人里面的年龄的list进行排序</p>
 <pre><code>people = [(&apos;laownag&apos;,&apos;man&apos;,&apos;23&apos;),(&apos;xiaoli&apos;,&apos;woman&apos;,&apos;21&apos;),(&apos;xiaozhang&apos;,&apos;man&apos;,&apos;17&apos;)]
 new_people = sorted(people,key = lambda x:x[2])
 print(new_people)
 &gt;&gt;&gt;[(&apos;xiaozhang&apos;, &apos;man&apos;, &apos;17&apos;), (&apos;xiaoli&apos;, &apos;woman&apos;, &apos;21&apos;), (&apos;laownag&apos;, &apos;man&apos;, &apos;23&apos;)]
-</code></pre><p>###<strong>4)用cmp函数排序</strong>###<br>python3中，cmp函数被operator模块取代，需要导入<br>cmp(x,y),如果x&gt;y,返回1，x&lt;y,返回-1，x==y,返回0</p>
+</code></pre><h3 id="4-用cmp函数排序"><a href="#4-用cmp函数排序" class="headerlink" title="4)用cmp函数排序"></a><strong>4)用cmp函数排序</strong></h3><p>python3中，cmp函数被operator模块取代，需要导入<br>cmp(x,y),如果x&gt;y,返回1，x&lt;y,返回-1，x==y,返回0</p>
 <pre><code>people = [(&apos;laownag&apos;,&apos;man&apos;,&apos;23&apos;),(&apos;xiaoli&apos;,&apos;woman&apos;,&apos;21&apos;),(&apos;xiaozhang&apos;,&apos;man&apos;,&apos;17&apos;)]
 new_people = sorted(people,cmp = lambda x，y:cmp(x[0],y[0])))
 print(new_people)
 &gt;&gt;&gt;[(&apos;laownag&apos;, &apos;man&apos;, &apos;23&apos;), (&apos;xiaoli&apos;, &apos;woman&apos;, &apos;21&apos;), (&apos;xiaozhang&apos;, &apos;man&apos;, &apos;17&apos;)]
-</code></pre><p>##2.map()<br>map函数跟根据提供的函数对制定序列做排序，接受一个函数f和一个list，并把函数f以此作用于每个list函数，然后返回一个新的list,map的函数的参数可以为多个，<strong>注意:这个函数一定要有返回值</strong></p>
+</code></pre><h2 id="2-map"><a href="#2-map" class="headerlink" title="2.map()"></a><strong>2.map()</strong></h2><p>map函数跟根据提供的函数对制定序列做排序，接受一个函数f和一个list，并把函数f以此作用于每个list函数，然后返回一个新的list,map的函数的参数可以为多个，<strong>注意:这个函数一定要有返回值</strong></p>
 <pre><code>def func(x):
     return x*x
 print(map(func([1,2,3,4,5])))
@@ -373,7 +373,7 @@ def add_x_y(x,y):
 return x+y
 print (map(add_x_y,[1,2,3,4,5],[2,3,4,5,6]))#必须len(x)==len(y)
 &gt;&gt;&gt;[3, 5, 7, 9, 11]
-</code></pre><p>##3.enumerate()<br>enumerate函数用于遍历序列中的元素以及它们的下标,多用于在for循环中得到计数,enumerate参数为可遍历的变量，如 字符串，列表等</p>
+</code></pre><h2 id="3-enumerate"><a href="#3-enumerate" class="headerlink" title="3.enumerate()"></a><strong>3.enumerate()</strong></h2><p>enumerate函数用于遍历序列中的元素以及它们的下标,多用于在for循环中得到计数,enumerate参数为可遍历的变量，如 字符串，列表等</p>
 <pre><code>#enumerate函数定义
 def enumerate(collection): 
     &apos;Generates an indexed series: (0,coll[0]), (1,coll[1]) ...&apos;   
@@ -445,8 +445,7 @@ r = zip(* [x] * 3)
 print r
 &gt;&gt;&gt;[(1, 1, 1), (2, 2, 2), (3, 3, 3)]
 </code></pre><p>&gt;<br>它的运行机制是这样的：<br>[x]生成一个列表的列表，它只有一个元素x<br>[x] * 3生成一个列表的列表，它有3个元素，[x, x, x]<br>zip(* [x] * 3)的意思就明确了，zip(x, x, x)  </p>
-<p>##<strong>5.filter()</strong>##</p>
-<blockquote>
+<h2 id="5-filter"><a href="#5-filter" class="headerlink" title="5.filter()"></a><strong>5.filter()</strong></h2><blockquote>
 <p>filter函数是接收一个字符串f,和一个list，这个函数是对每个函数进行判断返回True或者False,依次来过滤掉一些不符合条件的元素，返回符合元素的list.<strong>跟if判断添加list相似</strong></p>
 </blockquote>
 <pre><code>def is_num(x):
@@ -461,10 +460,8 @@ print(filter(is_num,[1,2,3,4,5,6,7]))
     return x in len(x.strip())&gt;0#不返回空列表
 print(filter(is_not_empty,[&apos;abc&apos;,&apos;&apos;,&apos;book&apos;,&apos;apple&apos;,&apos;\t&apos;,&apos;\n&apos;]))
 &gt;&gt;&gt; [&apos;abc&apos;, &apos;book&apos;, &apos;apple&apos;]
-</code></pre><p>###<strong>作者：陈亚坤</strong>A###A</p>
-<p>###<strong>邮箱：cykstart@163.com</strong>###</p>
-<p>###<strong>版权声明:本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</strong>###</p>
-<p>###<strong>参考资料链接:</strong>###<br><a href="https://zhuanlan.zhihu.com/p/26097557" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/26097557</a><br><a href="http://www.cnblogs.com/frydsh/archive/2012/07/10/2585370.html" target="_blank" rel="external">http://www.cnblogs.com/frydsh/archive/2012/07/10/2585370.html</a><br><a href="http://www.pythontab.com/html/2016/pythonjichu_1213/1111.html" target="_blank" rel="external">http://www.pythontab.com/html/2016/pythonjichu_1213/1111.html</a>  </p>
+</code></pre><h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><p>###<strong>版权声明:本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</strong> ###</p>
+<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="https://zhuanlan.zhihu.com/p/26097557" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/26097557</a><br><a href="http://www.cnblogs.com/frydsh/archive/2012/07/10/2585370.html" target="_blank" rel="external">http://www.cnblogs.com/frydsh/archive/2012/07/10/2585370.html</a><br><a href="http://www.pythontab.com/html/2016/pythonjichu_1213/1111.html" target="_blank" rel="external">http://www.pythontab.com/html/2016/pythonjichu_1213/1111.html</a>  </p>
 
       
     </div>
@@ -635,7 +632,7 @@ print(filter(is_not_empty,[&apos;abc&apos;,&apos;&apos;,&apos;book&apos;,&apos;a
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#python内置函数分析-1"><span class="nav-number">1.</span> <span class="nav-text">python内置函数分析(1)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#python内置函数分析-1"><span class="nav-number">1.</span> <span class="nav-text">python内置函数分析(1)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-sorted"><span class="nav-number">1.1.</span> <span class="nav-text">1.sorted()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-对一个列表进行排序"><span class="nav-number">1.1.1.</span> <span class="nav-text">1)对一个列表进行排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-通过key参数-函数"><span class="nav-number">1.1.2.</span> <span class="nav-text">2)通过key参数/函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-对由tuple组成的list进行排序"><span class="nav-number">1.1.3.</span> <span class="nav-text">3)对由tuple组成的list进行排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-用cmp函数排序"><span class="nav-number">1.1.4.</span> <span class="nav-text">4)用cmp函数排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-map"><span class="nav-number">1.2.</span> <span class="nav-text">2.map()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-enumerate"><span class="nav-number">1.3.</span> <span class="nav-text">3.enumerate()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-filter"><span class="nav-number">1.4.</span> <span class="nav-text">5.filter()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作者：陈亚坤"><span class="nav-number">1.4.1.</span> <span class="nav-text">作者：陈亚坤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邮箱：cykstart-163-com"><span class="nav-number">1.4.2.</span> <span class="nav-text">邮箱：cykstart@163.com</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料链接"><span class="nav-number">1.4.3.</span> <span class="nav-text">参考资料链接:</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
