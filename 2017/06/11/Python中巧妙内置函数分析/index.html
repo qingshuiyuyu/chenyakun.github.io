@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Python," />
+  <meta name="keywords" content="Python,function," />
 
 
 
@@ -92,8 +92,10 @@ PYTHON中内置了一些巧妙而强大的内置函数，熟练使用这些函�
 
 1.sorted()1)对一个列表进行排序a = [100,82,12,55,45]
 sorted(a)
-&amp;gt;&amp;gt;&amp;gt;[12,45,55,88,100]
-2)通过key参数/函数 例：长列表中嵌套字典元素,按照每个元素的长度进行排序(这">
+&amp;gt;&amp;gt;&amp;gt;[12,45,55,88,100]  
+
+#sorted()与sort()区别：
+#sorted()返回一个新的lis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python内置函数分析(1)">
 <meta property="og:url" content="http://yoursite.com/2017/06/11/Python中巧妙内置函数分析/index.html">
@@ -103,9 +105,11 @@ PYTHON中内置了一些巧妙而强大的内置函数，熟练使用这些函�
 
 1.sorted()1)对一个列表进行排序a = [100,82,12,55,45]
 sorted(a)
-&amp;gt;&amp;gt;&amp;gt;[12,45,55,88,100]
-2)通过key参数/函数 例：长列表中嵌套字典元素,按照每个元素的长度进行排序(这">
-<meta property="og:updated_time" content="2017-06-12T01:06:45.138Z">
+&amp;gt;&amp;gt;&amp;gt;[12,45,55,88,100]  
+
+#sorted()与sort()区别：
+#sorted()返回一个新的lis">
+<meta property="og:updated_time" content="2017-06-13T05:07:43.704Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python内置函数分析(1)">
 <meta name="twitter:description" content="python内置函数分析(1)
@@ -113,8 +117,10 @@ PYTHON中内置了一些巧妙而强大的内置函数，熟练使用这些函�
 
 1.sorted()1)对一个列表进行排序a = [100,82,12,55,45]
 sorted(a)
-&amp;gt;&amp;gt;&amp;gt;[12,45,55,88,100]
-2)通过key参数/函数 例：长列表中嵌套字典元素,按照每个元素的长度进行排序(这">
+&amp;gt;&amp;gt;&amp;gt;[12,45,55,88,100]  
+
+#sorted()与sort()区别：
+#sorted()返回一个新的lis">
 
 
 
@@ -344,7 +350,23 @@ sorted(a)
 </blockquote>
 <h2 id="1-sorted"><a href="#1-sorted" class="headerlink" title="1.sorted()"></a><strong>1.sorted()</strong></h2><h3 id="1-对一个列表进行排序"><a href="#1-对一个列表进行排序" class="headerlink" title="1)对一个列表进行排序"></a><strong>1)对一个列表进行排序</strong></h3><pre><code>a = [100,82,12,55,45]
 sorted(a)
-&gt;&gt;&gt;[12,45,55,88,100]
+&gt;&gt;&gt;[12,45,55,88,100]  
+
+#sorted()与sort()区别：
+#sorted()返回一个新的list，新的list基于小于运算符排列
+In [11]: a = [1,4,8,3,12]
+In [12]: b=sorted(a)
+In [13]: a
+Out[13]: [1, 4, 8, 3, 12]
+In [14]: b
+Out[14]: [1, 3, 4, 8, 12]
+#list.sort(),list本身被修改，通常不如soted()方便，如不需要原list，可以选用这种方法
+In [16]: a=[1,4,23,5,2] 
+In [17]: a.sort()
+In [18]: a
+Out[18]: [1, 2, 4, 5, 23]
+In [19]: b = a.sort()
+In [20]: b
 </code></pre><h3 id="2-通过key参数-函数"><a href="#2-通过key参数-函数" class="headerlink" title="2)通过key参数/函数"></a><strong>2)通过key参数/函数</strong></h3><p> 例：长列表中嵌套字典元素,按照每个元素的长度进行排序(这里使用匿名函数lambda)</p>
 <pre><code>list1 = [{2:6,8:2},{1:7},{1:2,5:12,9:2}]
 new_list = sorted(list1,key = lambda x:len(x))
@@ -365,9 +387,6 @@ print(new_people)
     return x*x
 print(map(func([1,2,3,4,5])))
 &gt;&gt;&gt;[1, 4, 9, 16, 25]
-
-
-
 
 def add_x_y(x,y):
 return x+y
@@ -456,7 +475,7 @@ print r
 &gt;&gt;&gt;[(1, 1, 1), (2, 2, 2), (3, 3, 3)]
 </code></pre><p>&gt;<br>它的运行机制是这样的：<br>[x]生成一个列表的列表，它只有一个元素x<br>[x] * 3生成一个列表的列表，它有3个元素，[x, x, x]<br>zip(* [x] * 3)的意思就明确了，zip(x, x, x)  </p>
 <h2 id="5-filter"><a href="#5-filter" class="headerlink" title="5.filter()"></a><strong>5.filter()</strong></h2><blockquote>
-<p>filter函数是接收一个字符串f,和一个list，这个函数是对每个函数进行判断返回True或者False,依次来过滤掉一些不符合条件的元素，返回符合元素的list.<strong>跟if判断添加list相似</strong></p>
+<p>filter函数是接收一函数f,和一个list，这个函数是对每个函数进行判断返回True或者False,依次来过滤掉一些不符合条件的元素，返回符合元素的list.<strong>跟if判断添加list相似</strong></p>
 </blockquote>
 <pre><code>def is_num(x):
     return x%2==0
@@ -470,7 +489,8 @@ print(filter(is_num,[1,2,3,4,5,6,7]))
     return x in len(x.strip())&gt;0#不返回空列表
 print(filter(is_not_empty,[&apos;abc&apos;,&apos;&apos;,&apos;book&apos;,&apos;apple&apos;,&apos;\t&apos;,&apos;\n&apos;]))
 &gt;&gt;&gt; [&apos;abc&apos;, &apos;book&apos;, &apos;apple&apos;]
-</code></pre><h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明-本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人-公司所有！"><a href="#版权声明-本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人-公司所有！" class="headerlink" title="版权声明:本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！"></a><strong>版权声明:本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</strong></h3><h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="https://zhuanlan.zhihu.com/p/26097557" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/26097557</a><br><a href="http://www.cnblogs.com/frydsh/archive/2012/07/10/2585370.html" target="_blank" rel="external">http://www.cnblogs.com/frydsh/archive/2012/07/10/2585370.html</a><br><a href="http://www.pythontab.com/html/2016/pythonjichu_1213/1111.html" target="_blank" rel="external">http://www.pythontab.com/html/2016/pythonjichu_1213/1111.html</a>  </p>
+</code></pre><h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
+<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="https://zhuanlan.zhihu.com/p/26097557" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/26097557</a><br><a href="http://www.cnblogs.com/frydsh/archive/2012/07/10/2585370.html" target="_blank" rel="external">http://www.cnblogs.com/frydsh/archive/2012/07/10/2585370.html</a><br><a href="http://www.pythontab.com/html/2016/pythonjichu_1213/1111.html" target="_blank" rel="external">http://www.pythontab.com/html/2016/pythonjichu_1213/1111.html</a>  </p>
 
       
     </div>
@@ -500,7 +520,7 @@ print(filter(is_not_empty,[&apos;abc&apos;,&apos;&apos;,&apos;book&apos;,&apos;a
       
         <div class="post-tags">
           
-            <a href="/tags/Python/" rel="tag"># Python</a>
+            <a href="/tags/Python-function/" rel="tag"># Python,function</a>
           
         </div>
       
@@ -606,7 +626,7 @@ print(filter(is_not_empty,[&apos;abc&apos;,&apos;&apos;,&apos;book&apos;,&apos;a
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">Tags</span>
               
             </div>
@@ -641,7 +661,7 @@ print(filter(is_not_empty,[&apos;abc&apos;,&apos;&apos;,&apos;book&apos;,&apos;a
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#python内置函数分析-1"><span class="nav-number">1.</span> <span class="nav-text">python内置函数分析(1)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-sorted"><span class="nav-number">1.1.</span> <span class="nav-text">1.sorted()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-对一个列表进行排序"><span class="nav-number">1.1.1.</span> <span class="nav-text">1)对一个列表进行排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-通过key参数-函数"><span class="nav-number">1.1.2.</span> <span class="nav-text">2)通过key参数/函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-对由tuple组成的list进行排序"><span class="nav-number">1.1.3.</span> <span class="nav-text">3)对由tuple组成的list进行排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-用cmp函数排序"><span class="nav-number">1.1.4.</span> <span class="nav-text">4)用cmp函数排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-map"><span class="nav-number">1.2.</span> <span class="nav-text">2.map()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-enumerate"><span class="nav-number">1.3.</span> <span class="nav-text">3.enumerate()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-zip"><span class="nav-number">1.4.</span> <span class="nav-text">4.zip()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-filter"><span class="nav-number">1.5.</span> <span class="nav-text">5.filter()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作者：陈亚坤"><span class="nav-number">1.5.1.</span> <span class="nav-text">作者：陈亚坤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邮箱：cykstart-163-com"><span class="nav-number">1.5.2.</span> <span class="nav-text">邮箱：cykstart@163.com</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版权声明-本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人-公司所有！"><span class="nav-number">1.5.3.</span> <span class="nav-text">版权声明:本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料链接"><span class="nav-number">1.5.4.</span> <span class="nav-text">参考资料链接:</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#python内置函数分析-1"><span class="nav-number">1.</span> <span class="nav-text">python内置函数分析(1)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-sorted"><span class="nav-number">1.1.</span> <span class="nav-text">1.sorted()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-对一个列表进行排序"><span class="nav-number">1.1.1.</span> <span class="nav-text">1)对一个列表进行排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-通过key参数-函数"><span class="nav-number">1.1.2.</span> <span class="nav-text">2)通过key参数/函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-对由tuple组成的list进行排序"><span class="nav-number">1.1.3.</span> <span class="nav-text">3)对由tuple组成的list进行排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-用cmp函数排序"><span class="nav-number">1.1.4.</span> <span class="nav-text">4)用cmp函数排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-map"><span class="nav-number">1.2.</span> <span class="nav-text">2.map()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-enumerate"><span class="nav-number">1.3.</span> <span class="nav-text">3.enumerate()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-zip"><span class="nav-number">1.4.</span> <span class="nav-text">4.zip()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-filter"><span class="nav-number">1.5.</span> <span class="nav-text">5.filter()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作者：陈亚坤"><span class="nav-number">1.5.1.</span> <span class="nav-text">作者：陈亚坤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邮箱：cykstart-163-com"><span class="nav-number">1.5.2.</span> <span class="nav-text">邮箱：cykstart@163.com</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版权声明"><span class="nav-number">1.5.3.</span> <span class="nav-text">版权声明:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料链接"><span class="nav-number">1.5.4.</span> <span class="nav-text">参考资料链接:</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
