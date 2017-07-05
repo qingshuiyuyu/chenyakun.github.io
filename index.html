@@ -250,6 +250,383 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/‘知乎模拟登陆/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈亚坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈亚坤的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/05/‘知乎模拟登陆/" itemprop="url">
+                  知乎模拟登陆
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-05T18:57:13+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="知乎模拟登陆"><a href="#知乎模拟登陆" class="headerlink" title="知乎模拟登陆"></a>知乎模拟登陆</h1><h3 id="直接上代码了，注意点都在注释！代码下面有重点说明！"><a href="#直接上代码了，注意点都在注释！代码下面有重点说明！" class="headerlink" title="直接上代码了，注意点都在注释！代码下面有重点说明！"></a>直接上代码了，注意点都在注释！代码下面有重点说明！</h3><pre><code>#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+
+import requests
+import time
+#引入Xpath解析器
+from lxml import etree
+
+#处理下载验证码
+def captcha(cha):
+    with open(&apos;captcha.jpg&apos;,&apos;w&apos;)as f:
+        f.write(cha)
+    return raw_input(&apos;请输入验证码：&apos;)
+
+def zhihu_login():
+
+    #1.重点：在登录过程中要保持cookie
+    ss = requests.Session()
+    #2.重点：此处url要与下面formdata的代码相对应
+    url = &apos;https://www.zhihu.com/login/phone_num&apos;#此处为手机账号登陆
+    #url = &apos;https://www.zhihu.com/login/email&apos;#此处为邮箱登陆
+
+    #3.必须添加user-agent
+    headers = {&apos;User-Agent&apos;:&apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.7 Safari/537.36&apos;}
+    #4.获取登录页面
+    response = ss.get(url,headers=headers).content
+    #转换成lxml
+    html = etree.HTML(response)
+    #5.获取_xsrf验证码
+    _xsrf = html.xpath(&quot;//div[@class=&apos;view view-signin&apos;]//input[@name=&apos;_xsrf&apos;]/@value&quot;)
+
+    #6.获取验证码链接，我直接写了，也可以跟url拼接
+    captcha_url = &quot;https://www.zhihu.com/captcha.gif?r=%d&amp;type=login&quot; % (time.time() * 1000)
+
+    #7.获取验证码图片
+    cha = ss.get(captcha_url,headers = headers).content
+
+    #8.构建post
+    formdata = {
+        &quot;_xsrf&quot;:_xsrf[0],#为了说明：我是用Xpath提取，_xsrf为一个元素的列表[&quot;值&quot;]，可以写在上面
+        &quot;password&quot;:&apos;xxxxxxx&apos;,#登陆密码
+        &quot;phone_num&quot;:&apos;xxxxxxxxx&apos;,#你的注册手机账号--必须与url：(/login/phone_num)相对应
+        #“email”:&quot;xxx@163.com&quot;#你的注册邮箱--必须与url：(/login/email)相对应
+        &apos;captcha&apos;:captcha(cha),#处理验证码
+    }
+
+    #9.把formdata里面的信息post到服务器登陆
+    ss.post(url,headers=headers,data=formdata)
+    #10.获取一个需要登陆后才能看到的页面，验证是否登陆成功
+    response = ss.get(&apos;https://www.zhihu.com/settings/profile&apos;,headers=headers).content
+
+    with open(&quot;shezhi.html&quot;, &quot;w&quot;) as f:
+            f.write(response)
+
+if __name__==&quot;__main__&quot;:
+    zhihu_login()
+</code></pre><h3 id="重点："><a href="#重点：" class="headerlink" title="重点："></a><strong>重点：</strong></h3><blockquote>
+<p><strong>1.登陆页面URL与在网页上看到的不一样，且要与post里面的账号类型相对应</strong>  </p>
+<p><strong>2.一定要带cookie和_cxrf发出请求,跳过网站防跨站攻击验证(cxrf)</strong></p>
+<p><strong>3.验证码为手动输入，运行到输入验证码出，刷新文件夹，打开图片输入即可，后期可以加机器识别</strong>  </p>
+<p><strong>4.注意formdata里面不要加”captcha_type”：”cn”,否则，验证码为汉字！</strong></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/25/re正则表达式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈亚坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈亚坤的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/25/re正则表达式/" itemprop="url">
+                  re正则表达式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-25T11:51:39+08:00">
+                2017-06-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="正则表达式总结"><a href="#正则表达式总结" class="headerlink" title="正则表达式总结"></a>正则表达式总结</h2><h3 id="一、检验数字的表达式"><a href="#一、检验数字的表达式" class="headerlink" title="一、检验数字的表达式"></a><strong>一、检验数字的表达式</strong></h3><ol>
+<li><p>数字: ^[0-9]*$</p>
+<pre><code>#也可以写作 m = re.match(&quot;^\d*$&quot;,&quot;32873&quot;)
+m = re.match(&quot;^[0-9]*$&quot;,&quot;32873&quot;)
+print m.group()
+&gt;&gt;&gt;32873
+</code></pre></li>
+<li><p>n位的数字:^[\d]{n}$</p>
+<pre><code>m = re.match(&quot;^\d{4}$&quot;,&quot;4565&quot;)
+print m.group()
+&gt;&gt;&gt;4565
+</code></pre></li>
+<li><p>至少n位数字:^[\d]{n,}$</p>
+<pre><code>m = re.match(&quot;^\d{4,}$&quot;,&quot;453265&quot;)
+print m.group()
+&gt;&gt;&gt;453265
+</code></pre></li>
+<li><p>m-n位的数字:^[\d]{m,n}$</p>
+<pre><code>m = re.match(&quot;^\d{4,12}$&quot;,&quot;453266&quot;)
+print m.group()
+&gt;&gt;&gt;453266
+</code></pre></li>
+<li><p>零和非零开头的数字:^(0|[1-9][0-9]*)$ </p>
+<pre><code>#a=0,可以 a=0124 不可以
+m = re.match(&quot;^(0|[1-9][0-9]*)$&quot;,&quot;787&quot;)
+print m.group()
+</code></pre></li>
+<li><p>零和非零开头的数字，最多带两位小数数字：^(0|[1-9][0-9]*)+(.[0-9]{1,2})?$</p>
+<pre><code>m = re.match(&quot;^(0|[1-9][0-9]*)+(.[0-9]{1,2})?$&quot;,&quot;7850.04&quot;)
+print m.group()
+&gt;&gt;&gt;7850.04
+</code></pre></li>
+<li><p>带一到两位小数的整数或负数 :^(-)?\d+(.\d{1,2})?$</p>
+<pre><code>m = re.match(&quot;^(\-)?\d+(\.\d{1,2})?$&quot;,&quot;-7850.00&quot;)
+print m.group()
+&gt;&gt;&gt;-7850.00
+</code></pre></li>
+<li><p>整数，负数，小数: ^(-|+)?\d+(.\d+)?$</p>
+<pre><code>#有BUG，0既不是整数，也不是负数，单也可以匹配
+m = re.match(&quot;^(\-|\+)?\d+(\.\d+)?$&quot;,&quot;+0.2&quot;)
+print m.group()
+&gt;&gt;&gt;+0.2
+</code></pre></li>
+<li><p>有两位小数的正实数:^(\d+)+(.\d{2})$</p>
+<pre><code>m = re.match(&quot;^(\d+)+(\.\d{2})$&quot;,&quot;12.00&quot;)
+print m.group()
+&gt;&gt;&gt;12.00
+</code></pre></li>
+</ol>
+<p>10.有一到三位的正实数：^(\d+)+(.\d{1,3})$        </p>
+<pre><code>m = re.match(&quot;^(\d+)+(\.\d{1,3})$&quot;,&quot;12.000&quot;)
+print m.group()
+</code></pre><ol>
+<li><p>非零的正整数: ^(+)?[1-9]\d*$</p>
+<pre><code>m = re.match(&quot;^(\+)?[1-9]\d*$&quot;,&quot;+12&quot;)
+print m.group()
+&gt;&gt;&gt;+12
+</code></pre></li>
+</ol>
+<p>12.非零的负整数:^(+)?[1-9]\d*$</p>
+<pre><code>m = re.match(&quot;^(\-)[1-9]\d*$&quot;,&quot;-12&quot;)
+print m.group()
+&gt;&gt;&gt;-12
+</code></pre><ol>
+<li><p>非负整数： ^(+)?\d+$</p>
+<pre><code>m = re.match(&quot;^(\+)?\d+$&quot;,&quot;03&quot;)
+print m.group()
+&gt;&gt;&gt;03
+</code></pre></li>
+<li><p>非正整数:^(-)\d+$</p>
+<pre><code>m = re.match(&quot;^(\-)\d+$&quot;,&quot;-3&quot;)
+print m.group()
+&gt;&gt;&gt;-3
+</code></pre></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/14/python语法糖/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1454,7 +1831,7 @@ print ret
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
