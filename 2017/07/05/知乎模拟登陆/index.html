@@ -113,7 +113,7 @@ from lxml import etree
 #处理下载验证码
 def captcha(cha):
     with open(&amp;apos;captcha.jpg&amp;">
-<meta property="og:updated_time" content="2017-07-05T11:29:29.864Z">
+<meta property="og:updated_time" content="2017-07-05T11:32:26.932Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="知乎模拟登陆">
 <meta name="twitter:description" content="知乎模拟登陆直接上代码了，注意点都在注释！代码下面有重点说明！#!/usr/bin/env python
@@ -408,7 +408,7 @@ def zhihu_login():
 if __name__==&quot;__main__&quot;:
     zhihu_login()
 </code></pre><h3 id="重点："><a href="#重点：" class="headerlink" title="重点："></a><strong>重点：</strong></h3><blockquote>
-<p><strong>1.登陆页面URL与在网页上看到的不一样，且要与post里面的账号类型相对应</strong>  </p>
+<p><strong>1.登陆页面URL与在网页上看到的不一样，且要与post里面的账号类型相对应，可以通过抓包(推荐：Fiddler)获得</strong>  </p>
 <p><strong>2.一定要带cookie和_cxrf发出请求,跳过网站防跨站攻击验证(cxrf)</strong></p>
 <p><strong>3.验证码为手动输入，运行到输入验证码出，刷新文件夹，打开图片输入即可，后期可以加机器识别</strong>  </p>
 <p><strong>4.注意formdata里面不要加”captcha_type”：”cn”,否则，验证码为汉字！</strong>  </p>
