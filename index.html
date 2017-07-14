@@ -250,6 +250,166 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/14/随机生成多为密码字符串的python代码实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈亚坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈亚坤的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/14/随机生成多为密码字符串的python代码实现/" itemprop="url">
+                  随机生成多为密码字符串的python代码实现
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-14T16:46:34+08:00">
+                2017-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="一个随机生成多为字符串的代码实现"><a href="#一个随机生成多为字符串的代码实现" class="headerlink" title="一个随机生成多为字符串的代码实现"></a>一个随机生成多为字符串的代码实现</h2><blockquote>
+<p><strong>可作为API接口，用作账户自动化注册，详情看注释</strong></p>
+</blockquote>
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Date    : 2017-07-13 21:47:18
+# @Author  : chen_yakun (cykstart@163.com)
+# @Link    : www.pychen.tech
+# @Version : $Id$
+
+#python随机生成10位数的字符串的代码实现，可以用为生成随机密码
+import string
+import random
+
+#list为26个英文字母的大小写，和0-9之间的数字
+list = list(string.lowercase+string.uppercase)+[str(i) for i in range(10)]
+#符号
+symbols = (&apos;!&apos;,&apos;@&apos;,&apos;#&apos;,&apos;$&apos;,&apos;%&apos;,&apos;&amp;&apos;,&apos;_&apos;)
+
+def randon_num():
+    for f in symbols:
+        list.append(f)
+    #random.sample()可以从指定的序列中，随机的截取指定长度的片断，不作原地修改。
+    num = random.sample(list,10)
+    value = &apos;&apos;.join(num) #将取出的十个随机数进行重新合并
+
+    #判断字符串是否是以数字开头,如果不是则返回return值
+    #如果是则再次递归调用该函数    
+    if not value[0].isdigit():
+          return value
+      return randon_num()
+
+if __name__ == &apos;__main__&apos;:
+    test = randon_num()
+    print(test)
+</code></pre><blockquote>
+<p><strong>当随机出来的字符串是以数字开头时，递归调用该函数！</strong></p>
+</blockquote>
+<h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
+<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="http://www.jb51.net/article/116399.htm" target="_blank" rel="external">http://www.jb51.net/article/116399.htm</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/知乎模拟登陆/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1832,7 +1992,7 @@ print ret
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
@@ -1845,7 +2005,7 @@ print ret
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">Tags</span>
               
             </div>
