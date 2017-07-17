@@ -250,6 +250,207 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/Phantomjs设置问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈亚坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈亚坤的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/17/Phantomjs设置问题/" itemprop="url">
+                  Phantomjs设置问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T14:45:33+08:00">
+                2017-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="phantomJS的配置问题"><a href="#phantomJS的配置问题" class="headerlink" title="phantomJS的配置问题"></a>phantomJS的配置问题</h2><h3 id="1-phantomJS浏览器的配置，比如user-agent伪装、代理、超时返回等选项。"><a href="#1-phantomJS浏览器的配置，比如user-agent伪装、代理、超时返回等选项。" class="headerlink" title="1.phantomJS浏览器的配置，比如user-agent伪装、代理、超时返回等选项。"></a>1.phantomJS浏览器的配置，比如user-agent伪装、代理、超时返回等选项。</h3><pre><code>from selenium import webdriver
+# 引入配置对象DesiredCapabilities
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+dcap = dict(DesiredCapabilities.PHANTOMJS)
+#从USER_AGENTS列表中随机选一个浏览器头，伪装浏览器
+dcap[&quot;phantomjs.page.settings.userAgent&quot;] = (random.choice(USER_AGENTS))
+# 不载入图片，爬页面速度会快很多
+dcap[&quot;phantomjs.page.settings.loadImages&quot;] = False
+# 设置代理
+service_args = [&apos;--proxy=127.0.0.1:9999&apos;,&apos;--proxy-type=socks5&apos;]
+#打开带配置信息的phantomJS浏览器
+driver = webdriver.PhantomJS(phantomjs_driver_path, desired_capabilities=dcap,service_args=service_args)                
+# 隐式等待5秒，可以自己调节
+driver.implicitly_wait(5)
+# 设置10秒页面超时返回，类似于requests.get()的timeout选项，driver.get()没有timeout选项
+# 以前遇到过driver.get(url)一直不返回，但也不报错的问题，这时程序会卡住，设置超时选项能解决这个问题。
+driver.set_page_load_timeout(10)
+# 设置10秒脚本超时时间
+driver.set_script_timeout(10)
+</code></pre><h3 id="2-phantomjs使用代理将会极大的拖累访问速度，一般使用scrapy框架中间件配置代理和User-Agent等。但如果使用Phantomjs则不在支持多线程并发。"><a href="#2-phantomjs使用代理将会极大的拖累访问速度，一般使用scrapy框架中间件配置代理和User-Agent等。但如果使用Phantomjs则不在支持多线程并发。" class="headerlink" title="2. phantomjs使用代理将会极大的拖累访问速度，一般使用scrapy框架中间件配置代理和User-Agent等。但如果使用Phantomjs则不在支持多线程并发。"></a>2. phantomjs使用代理将会极大的拖累访问速度，一般使用scrapy框架中间件配置代理和User-Agent等。但如果使用Phantomjs则不在支持多线程并发。</h3><blockquote>
+<p>示例代码如下</p>
+</blockquote>
+<pre><code>#coding=utf-8
+
+from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from scrapy.http import HtmlResponse
+from scrapy.conf import settings
+import time
+import random
+import base64
+
+class ChoiceAgent(object):
+    &quot;&quot;&quot;随机更换user-agent&quot;&quot;&quot;
+    def process_request(self, request, spider):
+        agent = random.choice(settings[&apos;USER_AGENTS&apos;])
+        request.headers.setdefault(&apos;User-Agent&apos;,agent)
+        print &apos;向请求添加User-Agent&apos;
+
+
+class SeleniumMiddleware(object):
+    def process_request(self, request, spider):
+        &quot;&quot;&quot; selenium 处理没有数据的代码&quot;&quot;&quot;
+        if request.meta.has_key(&apos;selenium&apos;):
+
+            agent = random.choice(settings[&apos;USER_AGENTS&apos;])
+            dcap = dict(DesiredCapabilities.PHANTOMJS)
+            dcap[&quot;phantomjs.page.settings.userAgent&quot;] = (agent)
+            driver = webdriver.PhantomJS(desired_capabilities=dcap, service_args=[&apos;--load-images=false&apos;])
+
+            print request.url
+            # driver = webdriver.PhantomJS() 
+            driver.get(request.url)
+            # driver.get(&quot;http://www.baidu.com/&quot;)
+            # print driver.page_source
+            time.sleep(2)
+            body = driver.page_source
+            url = driver.current_url
+            driver.quit()
+            # with open(&apos;test.html&apos;,&apos;w&apos;) as f:
+            #     f.write(body.encode(&apos;utf-8&apos;))            
+            return HtmlResponse(url, body=body, encoding=&apos;utf-8&apos;, request=request)
+
+class RandomProxy(object):
+    &quot;&quot;&quot; 使用代理 &quot;&quot;&quot;
+    def __init__(self):
+        self.proxy_auth = &quot;lai_323:ey65dwtm&quot;
+        self.proxy = &apos;122.114.136.239:16816&apos;
+    def process_request(self, request, spider):
+        # freeProxy = random.choice(proxy)
+        # freeproxy = freeProxy.keys()[0] + &apos;:&apos; + freeProxy.values()[0]
+        # print &apos;向请求添加代理&apos;
+        # request.meta[&apos;proxy&apos;] = &apos;http://&apos; + freeproxy
+
+        base64_userpass = base64.b64encode(self.proxy_auth)
+        #print proxy
+        request.meta[&apos;proxy&apos;] = &quot;http://&quot; + self.proxy
+        #if self.proxy_auth != None:
+        request.headers[&apos;Proxy-Authorization&apos;] = &quot;Basic &quot; + base64_userpass
+</code></pre><h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
+<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="http://www.jianshu.com/p/9d408e21dc3a" target="_blank" rel="external">http://www.jianshu.com/p/9d408e21dc3a</a><br><a href="http://blog.csdn.net/tcorpion/article/details/70213435" target="_blank" rel="external">http://blog.csdn.net/tcorpion/article/details/70213435</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/pytesseract机器识别常见问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -331,6 +532,8 @@
 <p><strong>原因：没有安装tesseract-ocr包</strong>  </p>
 <p><strong>解决方案：sudo apt-get install tesseract-ocr</strong></p>
 </blockquote>
+<h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
+<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="http://blog.csdn.net/kezhen/article/details/42967789" target="_blank" rel="external">http://blog.csdn.net/kezhen/article/details/42967789</a></p>
 
           
         
@@ -1942,138 +2145,13 @@ print ret
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/23/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈亚坤">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈亚坤的Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/23/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-23T18:44:43+08:00">
-                2017-03-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -2116,7 +2194,7 @@ print ret
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
@@ -2129,7 +2207,7 @@ print ret
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">Tags</span>
               
             </div>
