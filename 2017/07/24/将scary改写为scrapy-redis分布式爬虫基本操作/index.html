@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="python," />
+  <meta name="keywords" content="python,scrapy,redis," />
 
 
 
@@ -87,37 +87,28 @@
 
 
 
-<meta name="description" content="python中的语法糖1.列表转换
-对于一个列表如list1 = [[1,2],[3,4,5],[6,7],[8,9]]要将其转化为list2 = [1,2,3,4,5,6,7,8,9]下面讨论其中三种方法：
+<meta name="description" content="1.修改添加settings.py
+使用scrapy-redis提供的相关组件,列举了修改后的配置文件中与scrapy-redis有关的部分，middleware、proxy等内容在此就省略
 
-一般方法list1 = [[1,2],[3,4,5],[6,7],[8,9]]
-list2 = []
-for i in list1:
-    list2+=i
-print (list2)">
+# 1(必须). 使用了scrapy_redis的去重组件，在redis数据库里做去重
+DUPEFILTER_CLASS = &amp;quot;scrapy_redis.dupefilter.RFPDupeFil">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python中好玩的语法糖(1)">
-<meta property="og:url" content="http://yoursite.com/2017/06/14/python语法糖/index.html">
+<meta property="og:title" content="将scary改写为scrapy-redis分布式爬虫基本操作">
+<meta property="og:url" content="http://yoursite.com/2017/07/24/将scary改写为scrapy-redis分布式爬虫基本操作/index.html">
 <meta property="og:site_name" content="陈亚坤的Blog">
-<meta property="og:description" content="python中的语法糖1.列表转换
-对于一个列表如list1 = [[1,2],[3,4,5],[6,7],[8,9]]要将其转化为list2 = [1,2,3,4,5,6,7,8,9]下面讨论其中三种方法：
+<meta property="og:description" content="1.修改添加settings.py
+使用scrapy-redis提供的相关组件,列举了修改后的配置文件中与scrapy-redis有关的部分，middleware、proxy等内容在此就省略
 
-一般方法list1 = [[1,2],[3,4,5],[6,7],[8,9]]
-list2 = []
-for i in list1:
-    list2+=i
-print (list2)">
-<meta property="og:updated_time" content="2017-06-14T01:03:40.977Z">
+# 1(必须). 使用了scrapy_redis的去重组件，在redis数据库里做去重
+DUPEFILTER_CLASS = &amp;quot;scrapy_redis.dupefilter.RFPDupeFil">
+<meta property="og:updated_time" content="2017-07-24T14:03:44.258Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python中好玩的语法糖(1)">
-<meta name="twitter:description" content="python中的语法糖1.列表转换
-对于一个列表如list1 = [[1,2],[3,4,5],[6,7],[8,9]]要将其转化为list2 = [1,2,3,4,5,6,7,8,9]下面讨论其中三种方法：
+<meta name="twitter:title" content="将scary改写为scrapy-redis分布式爬虫基本操作">
+<meta name="twitter:description" content="1.修改添加settings.py
+使用scrapy-redis提供的相关组件,列举了修改后的配置文件中与scrapy-redis有关的部分，middleware、proxy等内容在此就省略
 
-一般方法list1 = [[1,2],[3,4,5],[6,7],[8,9]]
-list2 = []
-for i in list1:
-    list2+=i
-print (list2)">
+# 1(必须). 使用了scrapy_redis的去重组件，在redis数据库里做去重
+DUPEFILTER_CLASS = &amp;quot;scrapy_redis.dupefilter.RFPDupeFil">
 
 
 
@@ -145,13 +136,13 @@ print (list2)">
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/06/14/python语法糖/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/07/24/将scary改写为scrapy-redis分布式爬虫基本操作/"/>
 
 
 
 
 
-  <title> python中好玩的语法糖(1) | 陈亚坤的Blog </title>
+  <title> 将scary改写为scrapy-redis分布式爬虫基本操作 | 陈亚坤的Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -270,7 +261,7 @@ print (list2)">
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/14/python语法糖/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/24/将scary改写为scrapy-redis分布式爬虫基本操作/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈亚坤">
@@ -291,7 +282,7 @@ print (list2)">
             
             
               
-                python中好玩的语法糖(1)
+                将scary改写为scrapy-redis分布式爬虫基本操作
               
             
           </h1>
@@ -306,8 +297,8 @@ print (list2)">
               
                 <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-14T00:44:48+08:00">
-                2017-06-14
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-24T21:42:44+08:00">
+                2017-07-24
               </time>
             
 
@@ -342,58 +333,62 @@ print (list2)">
       
 
       
-        <h1 id="python中的语法糖"><a href="#python中的语法糖" class="headerlink" title="python中的语法糖"></a><strong>python中的语法糖</strong></h1><h2 id="1-列表转换"><a href="#1-列表转换" class="headerlink" title="1.列表转换"></a>1.列表转换</h2><blockquote>
-<p>对于一个列表如list1 = [[1,2],[3,4,5],[6,7],[8,9]]要将其转化为list2 = [1,2,3,4,5,6,7,8,9]下面讨论其中三种方法：</p>
+        <h3 id="1-修改添加settings-py"><a href="#1-修改添加settings-py" class="headerlink" title="1.修改添加settings.py"></a>1.修改添加settings.py</h3><blockquote>
+<p><strong>使用scrapy-redis提供的相关组件,列举了修改后的配置文件中与scrapy-redis有关的部分，middleware、proxy等内容在此就省略</strong></p>
 </blockquote>
-<h3 id="一般方法"><a href="#一般方法" class="headerlink" title="一般方法"></a><strong>一般方法</strong></h3><pre><code>list1 = [[1,2],[3,4,5],[6,7],[8,9]]
-list2 = []
-for i in list1:
-    list2+=i
-print (list2)
-&gt;&gt;&gt;[1, 2, 3, 4, 5, 6, 7, 8, 9]
-</code></pre><h3 id="2-Pythonic的方法，列表推导式"><a href="#2-Pythonic的方法，列表推导式" class="headerlink" title="2.Pythonic的方法，列表推导式"></a><strong>2.Pythonic的方法，列表推导式</strong></h3><pre><code>list1 = [[1,2],[3,4,5],[6,7],[8,9]]
-list2 = [i   for k in list1  for i in k ]#使用两层列表推到式
-print(list2)
-&gt;&gt;&gt;[1, 2, 3, 4, 5, 6, 7, 8, 9]
-</code></pre><h3 id="3-调用sum-函数-好用但不推荐"><a href="#3-调用sum-函数-好用但不推荐" class="headerlink" title="3.调用sum()函数(好用但不推荐)"></a><strong>3.调用sum()函数(好用但不推荐)</strong></h3><pre><code>list1 = [[1,2],[3,4,5],[6,7],[8,9]]
-list2 = sum(list1,[])
-print(list2)
-&gt;&gt;&gt;[1, 2, 3, 4, 5, 6, 7, 8, 9]
-</code></pre><blockquote>
-<p>sum()函数：<br>sum(iterable[, start]) ，#iterable为可迭代对象<br>sum([ ], start)     #iterable为list列表<br>sum(( ), start )    #iterable为tuple元组<br>sum函数最后的值 = 可迭代对象里面的数相加的值 + start的值，其中start可以不写，默认为0</p>
-</blockquote>
-<pre><code>sum([1, 2, 3,], 4)
-&gt;&gt;&gt;10
+<pre><code># 1(必须). 使用了scrapy_redis的去重组件，在redis数据库里做去重
+DUPEFILTER_CLASS = &quot;scrapy_redis.dupefilter.RFPDupeFilter
 
-list1 = [[1,2],[3,4,5],[6,7],[8,9]]
-list2 = sum(list1,[1,8])
-print(list2)
-&gt;&gt;&gt;[1, 8, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-</code></pre><h3 id="4-sum-函数与列表推导式组合"><a href="#4-sum-函数与列表推导式组合" class="headerlink" title="4.sum()函数与列表推导式组合"></a><strong>4.sum()函数与列表推导式组合</strong></h3><pre><code>from math import sqrt
-a = range(1, 11)
-b = range(1, 10)
-c = sum([item for item in a if item in b])#sum([1,2,3,4,5,6,7,8,9],[])
-print c
-&gt;&gt;&gt;45
-</code></pre><h3 id="5大神代码"><a href="#5大神代码" class="headerlink" title="5大神代码"></a><strong>5大神代码</strong></h3><pre><code>from math import sqrt
-</code></pre><p>def sim_distance(prefs, person1, person2):</p>
-<pre><code># 得到shared_items的列表
-si = {}
-for item in prefs[person1]:
-    if item in prefs[person2]:
-        si[item] = 1
+# 2(必须). 使用了scrapy_redis的调度器，在redis里分配请求
+SCHEDULER = &quot;scrapy_redis.scheduler.Scheduler&quot;
 
-# 如果两者没有共同之处，则返回0
-if len(si) == 0: return 0
+# 3(必须). 在redis中保持scrapy-redis用到的各个队列，从而允许暂停和暂停后恢复，也就是不清理redis queues
+SCHEDULER_PERSIST = True
 
-# 计算所有差值的平方和
-sum_of_squares = sum([pow(prefs[person1][item] - prefs[person2][item], 2) 
-                    for item in prefs[person1] if item in prefs[person2]])
+# 4(必须). 通过配置RedisPipeline将item写入key为 spider.name : items 的redis的list中，供后面的分布式处理item
+# 这个已经由 scrapy-redis 实现，不需要我们写代码，直接使用即可
+ITEM_PIPELINES = {
+    # &apos;AQI.pipelines.AqiJsonPipeline&apos;: 200,
+    # &apos;AQI.pipelines.AqiCSVPipeline&apos;: 300,
+    # &apos;AQI.pipelines.AqiRedisPipeline&apos;: 400,
+    # &apos;AQI.pipelines.AqiMongoPipeline&apos;: 500,
+    &apos;scrapy_redis.pipelines.RedisPipeline&apos;: 100
+}
 
-return 1/(1 + sqrt(sum_of_squares))
-</code></pre><h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
-<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="http://blog.csdn.net/cloume/article/details/65971925" target="_blank" rel="external">http://blog.csdn.net/cloume/article/details/65971925</a><br><a href="https://www.zhihu.com/question/57470958" target="_blank" rel="external">https://www.zhihu.com/question/57470958</a></p>
+# 5(必须). 指定redis数据库的连接参数
+REDIS_HOST = &apos;127.0.0.1&apos;
+REDIS_PORT = 6379
 
+# 6.如果不启用则按scrapy默认的策略
+#  -1. 默认的 按优先级排序(Scrapy默认)，由sorted set实现的一种非FIFO、LIFO方式。
+# SCHEDULER_QUEUE_CLASS = &apos;scrapy_redis.queue.SpiderPriorityQueue&apos;
+#  -2. 可选的 按先进先出排序（FIFO）
+# SCHEDULER_QUEUE_CLASS = &apos;scrapy_redis.queue.SpiderQueue&apos;
+#  -3. 可选的 按后进先出排序（LIFO）
+# SCHEDULER_QUEUE_CLASS = &apos;scrapy_redis.queue.SpiderStack&apos;
+
+# 7. LOG等级
+#LOG_LEVEL = &apos;DEBUG&apos;
+</code></pre><h3 id="2-修改-spiders"><a href="#2-修改-spiders" class="headerlink" title="2.修改 spiders"></a>2.修改 spiders</h3><pre><code># 1. 导入RedisSpider类，不使用Spider
+from scrapy_redis.spiders import RedisSpider
+
+# 2. 修改父类 RedisSpider
+class AqiSpider(RedisSpider):
+
+# 3. 取消start_urls，增加redis-key，接受从Redis数据库里的指令    
+#start_urls = [baseURL]
+redis_key = &apos;aqi:start_urls&apos;
+</code></pre><h3 id="3-分布式爬虫执行方式："><a href="#3-分布式爬虫执行方式：" class="headerlink" title="3.分布式爬虫执行方式："></a>3.分布式爬虫执行方式：</h3><pre><code>#1.在Master端启动redis-server：
+sudo redis-server /etc/redis/redis.conf
+
+#2. 在Slave端spiders目录下分别启动爬虫，不分先后：
+scrapy runspider aqi.py
+#有时继续使用scrapy crawl aqi.py
+
+#3. 所有Slaver端将处于等待指令状态，在Master端的redis-cli里push一个redis_key
+
+redis-cli&gt; lpush aqi:start_urls https://www.aqistudy.cn/historydata/
+</code></pre>
       
     </div>
 
@@ -424,6 +419,10 @@ return 1/(1 + sqrt(sum_of_squares))
           
             <a href="/tags/python/" rel="tag"># python</a>
           
+            <a href="/tags/scrapy/" rel="tag"># scrapy</a>
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
         </div>
       
 
@@ -435,8 +434,8 @@ return 1/(1 + sqrt(sum_of_squares))
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/11/Python中巧妙内置函数分析/" rel="next" title="python内置函数分析(1)">
-                <i class="fa fa-chevron-left"></i> python内置函数分析(1)
+              <a href="/2017/07/17/selenium-python-linux环境搭建/" rel="next" title="selenium+python+linux环境搭建">
+                <i class="fa fa-chevron-left"></i> selenium+python+linux环境搭建
               </a>
             
           </div>
@@ -444,10 +443,6 @@ return 1/(1 + sqrt(sum_of_squares))
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/06/25/re正则表达式/" rel="prev" title="re正则表达式">
-                re正则表达式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -567,7 +562,7 @@ return 1/(1 + sqrt(sum_of_squares))
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#python中的语法糖"><span class="nav-number">1.</span> <span class="nav-text">python中的语法糖</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-列表转换"><span class="nav-number">1.1.</span> <span class="nav-text">1.列表转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一般方法"><span class="nav-number">1.1.1.</span> <span class="nav-text">一般方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Pythonic的方法，列表推导式"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.Pythonic的方法，列表推导式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-调用sum-函数-好用但不推荐"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.调用sum()函数(好用但不推荐)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-sum-函数与列表推导式组合"><span class="nav-number">1.1.4.</span> <span class="nav-text">4.sum()函数与列表推导式组合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5大神代码"><span class="nav-number">1.1.5.</span> <span class="nav-text">5大神代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作者：陈亚坤"><span class="nav-number">1.1.6.</span> <span class="nav-text">作者：陈亚坤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邮箱：cykstart-163-com"><span class="nav-number">1.1.7.</span> <span class="nav-text">邮箱：cykstart@163.com</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版权声明"><span class="nav-number">1.1.8.</span> <span class="nav-text">版权声明:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料链接"><span class="nav-number">1.1.9.</span> <span class="nav-text">参考资料链接:</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-修改添加settings-py"><span class="nav-number">1.</span> <span class="nav-text">1.修改添加settings.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-修改-spiders"><span class="nav-number">2.</span> <span class="nav-text">2.修改 spiders</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-分布式爬虫执行方式："><span class="nav-number">3.</span> <span class="nav-text">3.分布式爬虫执行方式：</span></a></li></ol></div>
             
 
           </div>

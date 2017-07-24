@@ -250,6 +250,181 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/24/将scary改写为scrapy-redis分布式爬虫基本操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈亚坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈亚坤的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/24/将scary改写为scrapy-redis分布式爬虫基本操作/" itemprop="url">
+                  将scary改写为scrapy-redis分布式爬虫基本操作
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-24T21:42:44+08:00">
+                2017-07-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-修改添加settings-py"><a href="#1-修改添加settings-py" class="headerlink" title="1.修改添加settings.py"></a>1.修改添加settings.py</h3><blockquote>
+<p><strong>使用scrapy-redis提供的相关组件,列举了修改后的配置文件中与scrapy-redis有关的部分，middleware、proxy等内容在此就省略</strong></p>
+</blockquote>
+<pre><code># 1(必须). 使用了scrapy_redis的去重组件，在redis数据库里做去重
+DUPEFILTER_CLASS = &quot;scrapy_redis.dupefilter.RFPDupeFilter
+
+# 2(必须). 使用了scrapy_redis的调度器，在redis里分配请求
+SCHEDULER = &quot;scrapy_redis.scheduler.Scheduler&quot;
+
+# 3(必须). 在redis中保持scrapy-redis用到的各个队列，从而允许暂停和暂停后恢复，也就是不清理redis queues
+SCHEDULER_PERSIST = True
+
+# 4(必须). 通过配置RedisPipeline将item写入key为 spider.name : items 的redis的list中，供后面的分布式处理item
+# 这个已经由 scrapy-redis 实现，不需要我们写代码，直接使用即可
+ITEM_PIPELINES = {
+    # &apos;AQI.pipelines.AqiJsonPipeline&apos;: 200,
+    # &apos;AQI.pipelines.AqiCSVPipeline&apos;: 300,
+    # &apos;AQI.pipelines.AqiRedisPipeline&apos;: 400,
+    # &apos;AQI.pipelines.AqiMongoPipeline&apos;: 500,
+    &apos;scrapy_redis.pipelines.RedisPipeline&apos;: 100
+}
+
+# 5(必须). 指定redis数据库的连接参数
+REDIS_HOST = &apos;127.0.0.1&apos;
+REDIS_PORT = 6379
+
+# 6.如果不启用则按scrapy默认的策略
+#  -1. 默认的 按优先级排序(Scrapy默认)，由sorted set实现的一种非FIFO、LIFO方式。
+# SCHEDULER_QUEUE_CLASS = &apos;scrapy_redis.queue.SpiderPriorityQueue&apos;
+#  -2. 可选的 按先进先出排序（FIFO）
+# SCHEDULER_QUEUE_CLASS = &apos;scrapy_redis.queue.SpiderQueue&apos;
+#  -3. 可选的 按后进先出排序（LIFO）
+# SCHEDULER_QUEUE_CLASS = &apos;scrapy_redis.queue.SpiderStack&apos;
+
+# 7. LOG等级
+#LOG_LEVEL = &apos;DEBUG&apos;
+</code></pre><h3 id="2-修改-spiders"><a href="#2-修改-spiders" class="headerlink" title="2.修改 spiders"></a>2.修改 spiders</h3><pre><code># 1. 导入RedisSpider类，不使用Spider
+from scrapy_redis.spiders import RedisSpider
+
+# 2. 修改父类 RedisSpider
+class AqiSpider(RedisSpider):
+
+# 3. 取消start_urls，增加redis-key，接受从Redis数据库里的指令    
+#start_urls = [baseURL]
+redis_key = &apos;aqi:start_urls&apos;
+</code></pre><h3 id="3-分布式爬虫执行方式："><a href="#3-分布式爬虫执行方式：" class="headerlink" title="3.分布式爬虫执行方式："></a>3.分布式爬虫执行方式：</h3><pre><code>#1.在Master端启动redis-server：
+sudo redis-server /etc/redis/redis.conf
+
+#2. 在Slave端spiders目录下分别启动爬虫，不分先后：
+scrapy runspider aqi.py
+#有时继续使用scrapy crawl aqi.py
+
+#3. 所有Slaver端将处于等待指令状态，在Master端的redis-cli里push一个redis_key
+
+redis-cli&gt; lpush aqi:start_urls https://www.aqistudy.cn/historydata/
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/selenium-python-linux环境搭建/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1864,305 +2039,6 @@ print(filter(is_not_empty,[&apos;abc&apos;,&apos;&apos;,&apos;book&apos;,&apos;a
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/28/关于正则表达式的一些总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈亚坤">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈亚坤的Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/28/关于正则表达式的一些总结/" itemprop="url">
-                  关于正则表达式的一些总结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-28T18:51:51+08:00">
-                2017-03-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <hr>
-<h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a><strong>正则表达式</strong></h3><hr>
-<p>正则表达式：(Regular Expression)是计算机科学的一个概念。Regular Expression即“描述某种规则的表达式”之意。</p>
-<p>正则表达式使用单个字符串来描述、匹配一系列匹配某个句法规则的字符串。在很多文本编辑器里，正则表达式通常被用来检索、替换那些匹配某个模式的文本。</p>
-<hr>
-<h4 id="1-在Python中需要通过正则表达式对字符串进行匹配的时候通常引入：re模块"><a href="#1-在Python中需要通过正则表达式对字符串进行匹配的时候通常引入：re模块" class="headerlink" title="1. 在Python中需要通过正则表达式对字符串进行匹配的时候通常引入：re模块"></a><strong>1. 在Python中需要通过正则表达式对字符串进行匹配的时候通常引入：re模块</strong></h4><p>re.match是用来进行正则匹配检查的方法，若字符串匹配正则表达式，则match方法返回匹配对象（Match Object），否则返回None（注意不是空字符串””）。</p>
-<p>匹配对象Macth Object具有group方法，用来返回字符串的匹配部分。</p>
-<hr>
-<h4 id="2-re模块示例-匹配以itcast开头的语句"><a href="#2-re模块示例-匹配以itcast开头的语句" class="headerlink" title="2. re模块示例(匹配以itcast开头的语句)"></a><strong>2. re模块示例(匹配以itcast开头的语句)</strong></h4><p>#coding=utf-8</p>
-<pre><code>import re
-
-result = re.match(&quot;itcast&quot;,&quot;itcast.cn&quot;)
-
-result.group()
-</code></pre><p>运行结果为：</p>
-<p>itcast</p>
-<h4 id="3-re-match-能够匹配出以xxx开头的字符串。"><a href="#3-re-match-能够匹配出以xxx开头的字符串。" class="headerlink" title="3. re.match() 能够匹配出以xxx开头的字符串。"></a><strong>3. re.match() 能够匹配出以xxx开头的字符串。</strong></h4><hr>
-<h4 id="4-正则表达式中的表示字符"><a href="#4-正则表达式中的表示字符" class="headerlink" title="4. 正则表达式中的表示字符"></a><strong>4. 正则表达式中的表示字符</strong></h4><hr>
-<p>字符|代号</p>
-<p>|&#124;&#124;</p>
-<p>.|    匹配任意1个字符（除了\n）</p>
-<p>[ ]    |匹配[ ]中列举的字符</p>
-<p>\d     |匹配数字，即0-9</p>
-<p>\D    |    匹配非数字，即不是数字</p>
-<p>\s    |    匹配空白，即 空格，tab键</p>
-<p>\S    |    匹配非空白</p>
-<p>\w    |    匹配单词字符，即a-z、A-Z、0-9、_</p>
-<p>\W    |    匹配非单词字符</p>
-<p>需求：匹配出，一个字符串第一个字母为大小字符，后面都是小写字母并且这些小写字母可有可无</p>
-<p><strong>示例一：.</strong></p>
-<pre><code>&lt;&lt;&lt;re,match(&quot;.&quot;,&quot;m&quot;)
-&quot;m&quot;
-&lt;&lt;&lt;
-</code></pre><p><strong>示例二·：[]</strong></p>
-<pre><code>&lt;&lt;&lt;re.match(&quot;[Hh]&quot;,&quot;hello world&quot;)#无论h大小写均可
-&quot;h&quot;
-&lt;&lt;&lt;
-</code></pre><h4 id="5-Python中字符串前面加上-r-表示原生字符串"><a href="#5-Python中字符串前面加上-r-表示原生字符串" class="headerlink" title="5.Python中字符串前面加上 r 表示原生字符串"></a><strong>5.Python中字符串前面加上 r 表示原生字符串</strong></h4><hr>
-<pre><code>&gt;&gt;&gt; ret = re.match(r&quot;c:\\a&quot;,mm).group()
-&gt;&gt;&gt; print(ret)
-c:\a
-</code></pre><h4 id="6-正则表达式中表示数量"><a href="#6-正则表达式中表示数量" class="headerlink" title="6.正则表达式中表示数量"></a><strong>6.正则表达式中表示数量</strong></h4><hr>
-<p>字符|    功能</p>
-<p>*|匹配前一个字符出现0次或者无限次，即可有可无</p>
-<p>+|匹配前一个字符出现1次或者无限次，即至少有1次</p>
-<p>?|匹配前一个字符出现1次或者0次，即要么有1次，要么没有</p>
-<p>{m}    |匹配前一个字符出现m次</p>
-<p>{m,}    |匹配前一个字符至少出现m次</p>
-<p>{m,n}    |匹配前一个字符出现从m到n次</p>
-<p><strong>示例一：*</strong></p>
-<pre><code>&gt;&gt;&gt;#coding =utf-8
-&gt;&gt;&gt;ret = re.match(&quot;[A-Z][a-z]*&quot;,&quot;Mm&quot;)
-&gt;&gt;&gt;ret.group()
-&quot;Mm&quot;
-&gt;&gt;&gt;
-
-&gt;&gt;&gt;ret = re.match(&quot;[A-Z][a-z]*&quot;,&quot;Aabcdef&quot;)
-&gt;&gt;&gt;ret.group()
-&quot;Aabcdef&quot;
-&gt;&gt;&gt;
-</code></pre><p><strong>示例二:?</strong></p>
-<p>需求：匹配出，0到99之间的数字</p>
-<pre><code>#coding=utf-8
-import re
-
-ret = re.match(&quot;[1-9]?[0-9]&quot;,&quot;7&quot;)
-ret.group()
-
-ret = re.match(&quot;[1-9]?[0-9]&quot;,&quot;33&quot;)
-ret.group()
-
-ret = re.match(&quot;[1-9]?[0-9]&quot;,&quot;09&quot;)
-ret.group()
-</code></pre><h4 id="7-正则表达式表示边界"><a href="#7-正则表达式表示边界" class="headerlink" title="7.正则表达式表示边界"></a><strong>7.正则表达式表示边界</strong></h4><hr>
-<p>字符|    功能</p>
-<p>^    |匹配字符串开头</p>
-<p>$    |匹配字符串结尾</p>
-<p>\b    |匹配一个单词的边界</p>
-<p>\B    |匹配非单词边界</p>
-<p><strong>示例一：$</strong></p>
-<p>需求：匹配163.com的邮箱地址</p>
-<pre><code>#coding=utf-8
-
-import re
-ret = re.match(&quot;[\w]{4,20}@163\.com$&quot;, &quot;xiaoWang@163.comheihei&quot;)
-ret.group()
-</code></pre><p>结果：报错！！！</p>
-<h3 id="8-正则表达式匹配分组"><a href="#8-正则表达式匹配分组" class="headerlink" title="8.正则表达式匹配分组"></a><strong>8.正则表达式匹配分组</strong></h3><hr>
-<p>字符    |功能<br>|—-|——-|</p>
-<p>|    |匹配左右任意一个表达式</p>
-<p>(ab)    |将括号中字符作为一个分组</p>
-<p>\num    |引用分组num匹配到的字符串</p>
-<p>(?P<name>)    |分组起别名</name></p>
-<p>(?P=name)    |引用别名为name分组匹配到的字符串</p>
-<p><strong>示例二:()</strong></p>
-<pre><code>&gt;&gt;&gt; ret = re.match(&quot;([^-]*)-(\d+)&quot;,&quot;010-12345678&quot;)
-&gt;&gt;&gt; ret.group()
-&apos;010-12345678&apos;
-&gt;&gt;&gt; ret.group(1)
-&apos;010&apos;
-&gt;&gt;&gt; ret.group(2)
-&apos;12345678&apos;
-</code></pre><h3 id="9-re模块的高级用法"><a href="#9-re模块的高级用法" class="headerlink" title="9.re模块的高级用法"></a><strong>9.re模块的高级用法</strong></h3><hr>
-<h4 id="serch"><a href="#serch" class="headerlink" title="serch"></a>serch</h4><p><strong>需求：匹配出文章阅读的次数</strong></p>
-<pre><code>#coding=utf-8
-import re
-
-ret = re.search(r&quot;\d+&quot;, &quot;阅读次数为 9999&quot;)
-ret.group()
-</code></pre><p>运行结果：</p>
-<pre><code>&gt;&gt;&gt;ret.group()
-&quot;9999&quot;
-&gt;&gt;&gt;
-</code></pre><h4 id="findall"><a href="#findall" class="headerlink" title="findall"></a>findall</h4><p><strong>需求：统计出python、c、c++相应文章阅读的次数</strong></p>
-<pre><code>#coding=utf-8
-import re
-
-ret = re.findall(r&quot;\d+&quot;, &quot;python = 9999, c = 7890, c++ = 12345&quot;)
-print ret
-</code></pre><p>运行结果：</p>
-<pre><code>&gt;&gt;&gt;print ret
-[&quot;9999&quot;,&quot;7890&quot;,&quot;12345&quot;]
-&gt;&gt;&gt;
-</code></pre><h4 id="sub-将匹配到的数据进行替换"><a href="#sub-将匹配到的数据进行替换" class="headerlink" title="sub :将匹配到的数据进行替换"></a>sub :将匹配到的数据进行替换</h4><p><strong>需求：将匹配到的阅读次数加1</strong></p>
-<p>方法一：</p>
-<pre><code>#coding=utf-8
-import re
-
-ret = re.sub(r&quot;\d+&quot;, &apos;998&apos;, &quot;python = 997&quot;)
-print ret
-</code></pre><p>运行结果:</p>
-<pre><code>&gt;&gt;&gt;print ret
-python = 998
-&gt;&gt;&gt;
-</code></pre><p>方法二：</p>
-<pre><code>#coding=utf-8
-import re
-
-def add(temp):
-    strNum = temp.group()
-    num = int(strNum) + 1
-    return str(num)
-
-ret = re.sub(r&quot;\d+&quot;, add, &quot;python = 997&quot;)
-print ret
-
-ret = re.sub(r&quot;\d+&quot;, add, &quot;python = 99&quot;)
-print ret
-</code></pre><p>运行结果:</p>
-<pre><code>&gt;&gt;&gt;ret = re.sub(r&quot;\d&quot;,add,&quot;python = p77&quot;)
-&gt;&gt;&gt;print ret
-python = 998
-&gt;&gt;&gt;ret = re.sub(r&quot;\d&quot;,add,&quot;python = 99&quot;)
-print ret
-&gt;&gt;&gt;python = 100
-&gt;&gt;&gt;
-</code></pre><h4 id="10-贪婪和非贪婪"><a href="#10-贪婪和非贪婪" class="headerlink" title="10.贪婪和非贪婪"></a><strong>10.贪婪和非贪婪</strong></h4><p>Python里数量词默认是贪婪的（在少数语言里也可能是默认非贪婪），总是尝试匹配尽可能多的字符；</p>
-<p>非贪婪则相反，总是尝试匹配尽可能少的字符。</p>
-<p>在”*”,”?”,”+”,”{m,n}”后面加上？，使贪婪变成非贪婪。</p>
-<pre><code>&gt;&gt;&gt; s=&quot;This is a number 234-235-22-423&quot;
-&gt;&gt;&gt; r=re.match(&quot;.+(\d+-\d+-\d+-\d+)&quot;,s)
-&gt;&gt;&gt; r.group(1)
-&apos;4-235-22-423&apos;
-&gt;&gt;&gt; r=re.match(&quot;.+?(\d+-\d+-\d+-\d+)&quot;,s)
-&gt;&gt;&gt; r.group(1)
-&apos;234-235-22-423&apos;
-&gt;&gt;&gt;
-</code></pre><p>正则表达式模式中使用到通配字，那它在从左到右的顺序求值时，会尽量“抓取”满足匹配最长字符串，在上面的例子里面，“.+”会从字符串的启始处抓取满足模式的最长字符，其中包括想得到的第一个整型字段的中的大部分，“\d+”只需一位字符就可以匹配，所以它匹配了数字“4”，而“.+”则匹配了从字符串起始到这个第一位数字4之前的所有字符。</p>
-<pre><code>&gt;&gt;&gt; re.match(r&quot;aa(\d+)&quot;,&quot;aa2343ddd&quot;).group(1)
-&apos;2343&apos;
-&gt;&gt;&gt; re.match(r&quot;aa(\d+?)&quot;,&quot;aa2343ddd&quot;).group(1)
-&apos;2&apos;
-&gt;&gt;&gt; re.match(r&quot;aa(\d+)ddd&quot;,&quot;aa2343ddd&quot;).group(1) 
-&apos;2343&apos;
-&gt;&gt;&gt; re.match(r&quot;aa(\d+?)ddd&quot;,&quot;aa2343ddd&quot;).group(1)
-&apos;2343&apos;
-&gt;&gt;&gt;
-</code></pre><hr>
-<p>以上就是关于正则表达式基本知识，几乎所有的正则表达式都可以通过以上方法就行匹配，正则表达式广泛应用于检索，替换那些符合某个模式(规则)的文本，在python的爬虫应用中可以用来检索爬取检索到的有用信息。</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -2212,7 +2088,7 @@ print ret
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">Artikel</span>
               </a>
             </div>
@@ -2225,7 +2101,7 @@ print ret
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">Tags</span>
               
             </div>
