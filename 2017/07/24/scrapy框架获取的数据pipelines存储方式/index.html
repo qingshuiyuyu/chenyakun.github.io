@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="python,Phantomjs,spider," />
+  <meta name="keywords" content="python,spider,scrapy," />
 
 
 
@@ -87,25 +87,43 @@
 
 
 
-<meta name="description" content="phantomJS的配置问题1.phantomJS浏览器的配置，比如user-agent伪装、代理、超时返回等选项。from selenium import webdriver
-# 引入配置对象DesiredCapabilities
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-dcap">
+<meta name="description" content="###1.在scrapy框架中存储为Json,Redis,Mongodb,Mysql,CSV文件
+import json
+import redis
+from scrapy.conf import settings
+import pymongo
+
+#存储为Json
+class AqiJsonPipeline(object):
+    #新建一个Json存储文件
+    def open_spider">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Phantomjs设置问题">
-<meta property="og:url" content="http://yoursite.com/2017/07/17/Phantomjs设置问题/index.html">
+<meta property="og:title" content="scrapy框架获取的数据pipelines存储方式">
+<meta property="og:url" content="http://yoursite.com/2017/07/24/scrapy框架获取的数据pipelines存储方式/index.html">
 <meta property="og:site_name" content="陈亚坤的Blog">
-<meta property="og:description" content="phantomJS的配置问题1.phantomJS浏览器的配置，比如user-agent伪装、代理、超时返回等选项。from selenium import webdriver
-# 引入配置对象DesiredCapabilities
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-dcap">
-<meta property="og:updated_time" content="2017-07-17T06:54:59.809Z">
+<meta property="og:description" content="###1.在scrapy框架中存储为Json,Redis,Mongodb,Mysql,CSV文件
+import json
+import redis
+from scrapy.conf import settings
+import pymongo
+
+#存储为Json
+class AqiJsonPipeline(object):
+    #新建一个Json存储文件
+    def open_spider">
+<meta property="og:updated_time" content="2017-07-24T14:24:25.470Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Phantomjs设置问题">
-<meta name="twitter:description" content="phantomJS的配置问题1.phantomJS浏览器的配置，比如user-agent伪装、代理、超时返回等选项。from selenium import webdriver
-# 引入配置对象DesiredCapabilities
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-dcap">
+<meta name="twitter:title" content="scrapy框架获取的数据pipelines存储方式">
+<meta name="twitter:description" content="###1.在scrapy框架中存储为Json,Redis,Mongodb,Mysql,CSV文件
+import json
+import redis
+from scrapy.conf import settings
+import pymongo
+
+#存储为Json
+class AqiJsonPipeline(object):
+    #新建一个Json存储文件
+    def open_spider">
 
 
 
@@ -133,13 +151,13 @@ dcap">
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/07/17/Phantomjs设置问题/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/07/24/scrapy框架获取的数据pipelines存储方式/"/>
 
 
 
 
 
-  <title> Phantomjs设置问题 | 陈亚坤的Blog </title>
+  <title> scrapy框架获取的数据pipelines存储方式 | 陈亚坤的Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -258,7 +276,7 @@ dcap">
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/Phantomjs设置问题/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/24/scrapy框架获取的数据pipelines存储方式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈亚坤">
@@ -279,7 +297,7 @@ dcap">
             
             
               
-                Phantomjs设置问题
+                scrapy框架获取的数据pipelines存储方式
               
             
           </h1>
@@ -294,8 +312,8 @@ dcap">
               
                 <span class="post-meta-item-text">Veröffentlicht am</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T14:45:33+08:00">
-                2017-07-17
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-24T22:06:27+08:00">
+                2017-07-24
               </time>
             
 
@@ -330,87 +348,182 @@ dcap">
       
 
       
-        <h2 id="phantomJS的配置问题"><a href="#phantomJS的配置问题" class="headerlink" title="phantomJS的配置问题"></a>phantomJS的配置问题</h2><h3 id="1-phantomJS浏览器的配置，比如user-agent伪装、代理、超时返回等选项。"><a href="#1-phantomJS浏览器的配置，比如user-agent伪装、代理、超时返回等选项。" class="headerlink" title="1.phantomJS浏览器的配置，比如user-agent伪装、代理、超时返回等选项。"></a>1.phantomJS浏览器的配置，比如user-agent伪装、代理、超时返回等选项。</h3><pre><code>from selenium import webdriver
-# 引入配置对象DesiredCapabilities
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-dcap = dict(DesiredCapabilities.PHANTOMJS)
-#从USER_AGENTS列表中随机选一个浏览器头，伪装浏览器
-dcap[&quot;phantomjs.page.settings.userAgent&quot;] = (random.choice(USER_AGENTS))
-# 不载入图片，爬页面速度会快很多
-dcap[&quot;phantomjs.page.settings.loadImages&quot;] = False
-# 设置代理
-service_args = [&apos;--proxy=127.0.0.1:9999&apos;,&apos;--proxy-type=socks5&apos;]
-#打开带配置信息的phantomJS浏览器
-driver = webdriver.PhantomJS(phantomjs_driver_path, desired_capabilities=dcap,service_args=service_args)                
-# 隐式等待5秒，可以自己调节
-driver.implicitly_wait(5)
-# 设置10秒页面超时返回，类似于requests.get()的timeout选项，driver.get()没有timeout选项
-# 以前遇到过driver.get(url)一直不返回，但也不报错的问题，这时程序会卡住，设置超时选项能解决这个问题。
-driver.set_page_load_timeout(10)
-# 设置10秒脚本超时时间
-driver.set_script_timeout(10)
-</code></pre><h3 id="2-phantomjs使用代理将会极大的拖累访问速度，一般使用scrapy框架中间件配置代理和User-Agent等。但如果使用Phantomjs则不在支持多线程并发。"><a href="#2-phantomjs使用代理将会极大的拖累访问速度，一般使用scrapy框架中间件配置代理和User-Agent等。但如果使用Phantomjs则不在支持多线程并发。" class="headerlink" title="2. phantomjs使用代理将会极大的拖累访问速度，一般使用scrapy框架中间件配置代理和User-Agent等。但如果使用Phantomjs则不在支持多线程并发。"></a>2. phantomjs使用代理将会极大的拖累访问速度，一般使用scrapy框架中间件配置代理和User-Agent等。但如果使用Phantomjs则不在支持多线程并发。</h3><blockquote>
-<p>示例代码如下</p>
-</blockquote>
-<pre><code>#coding=utf-8
-
-from selenium import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from scrapy.http import HtmlResponse
+        <p>###1.在scrapy框架中存储为Json,Redis,Mongodb,Mysql,CSV文件</p>
+<pre><code>import json
+import redis
 from scrapy.conf import settings
-import time
-import random
-import base64
+import pymongo
 
-class ChoiceAgent(object):
-    &quot;&quot;&quot;随机更换user-agent&quot;&quot;&quot;
-    def process_request(self, request, spider):
-        agent = random.choice(settings[&apos;USER_AGENTS&apos;])
-        request.headers.setdefault(&apos;User-Agent&apos;,agent)
-        print &apos;向请求添加User-Agent&apos;
+#存储为Json
+class AqiJsonPipeline(object):
+    #新建一个Json存储文件
+    def open_spider(self, spider):
+        #指定写入权限
+        self.f = open(&quot;aqi.json&quot;, &quot;w&quot;)
+    def process_item(self, item, spider):
+        item[&quot;spider&quot;] = spider.name
+        #转编码格式
+        content = json.dumps(dict(item), ensure_ascii = False) + &quot;,\n&quot;
+        self.f.write(content.encode(&quot;utf-8&quot;))
+        return item
 
+    def close_spider(self, spider):
+        self.f.close()
 
-class SeleniumMiddleware(object):
-    def process_request(self, request, spider):
-        &quot;&quot;&quot; selenium 处理没有数据的代码&quot;&quot;&quot;
-        if request.meta.has_key(&apos;selenium&apos;):
+#存储为csv文件
+class AqiCSVPipeline(object):
+    def open_spider(self, spider):
+        # 创建csv文件对象，拥有写权限
+        self.csv = open(&quot;aqi.csv&quot;, &quot;w&quot;)
+        # 查创建一个Csv文件读写对象，参数是csv文件对象
+        self.csvexporter = CsvItemExporter(self.csv)
+        # 指定读写权限，可以开始写入数据
+        self.csvexporter.start_exporting()
 
-            agent = random.choice(settings[&apos;USER_AGENTS&apos;])
-            dcap = dict(DesiredCapabilities.PHANTOMJS)
-            dcap[&quot;phantomjs.page.settings.userAgent&quot;] = (agent)
-            driver = webdriver.PhantomJS(desired_capabilities=dcap, service_args=[&apos;--load-images=false&apos;])
+    def process_item(self, item, spider):
+        # 将item数据写入到csv文件里
+        self.csvexporter.export_item(item)
+        return item
 
-            print request.url
-            # driver = webdriver.PhantomJS() 
-            driver.get(request.url)
-            # driver.get(&quot;http://www.baidu.com/&quot;)
-            # print driver.page_source
-            time.sleep(2)
-            body = driver.page_source
-            url = driver.current_url
-            driver.quit()
-            # with open(&apos;test.html&apos;,&apos;w&apos;) as f:
-            #     f.write(body.encode(&apos;utf-8&apos;))            
-            return HtmlResponse(url, body=body, encoding=&apos;utf-8&apos;, request=request)
+    def close_spider(self, spider):
+        # 表述数据写入结束
+        self.csvexporter.finish_exporting()
+        self.csv.close()
 
-class RandomProxy(object):
-    &quot;&quot;&quot; 使用代理 &quot;&quot;&quot;
+#存储到redis数据库中
+class AqiRedisPipeline(object):
+    def open_spider(self, spider):
+        # 创建Redis数据库连接对象
+        self.redis_cli = redis.Redis(host = &quot;127.0.0.1&quot;, port = 6379)
+
+    def process_item(self, item, spider):
+        # 将item转换成json格式
+        content = json.dumps(dict(item), ensure_ascii = False)
+        # 将数据写入到list里，key AQI， value content
+        self.redis_cli.lpush(&quot;AQI&quot;, content)
+        return item
+
+#存储为Mongodb数据库中
+class AqiMongoPipeline(object):
+    def open_spider(self, spider):
+        # 创建MongoDb数据库链接对象
+        self.mongo_cli = pymongo.MongoClient(host = &quot;127.0.0.1&quot;, port = 27017)
+        # 创建MongoDB的数据库
+        self.dbname = self.mongo_cli[&quot;AQI&quot;]
+        # 创建数据库的表
+        self.sheet = self.dbname[&quot;AQI_data&quot;]
+
+    def process_item(self, item, spider):
+        # 将数据插入到表里
+        self.sheet.insert(dict(item))
+        return item
+
+#存储为mysql数据库中，需要提前创建mysql数据库
+#将数据存储到mysql数据库
+from twisted.enterprise import adbapi
+import MySQLdb
+import MySQLdb.cursors
+class MySQLStorePipeline(object):
+    #数据库参数
     def __init__(self):
-        self.proxy_auth = &quot;lai_323:ey65dwtm&quot;
-        self.proxy = &apos;122.114.136.239:16816&apos;
-    def process_request(self, request, spider):
-        # freeProxy = random.choice(proxy)
-        # freeproxy = freeProxy.keys()[0] + &apos;:&apos; + freeProxy.values()[0]
-        # print &apos;向请求添加代理&apos;
-        # request.meta[&apos;proxy&apos;] = &apos;http://&apos; + freeproxy
+        dbargs = dict(
+             host = &apos;127.0.0.1&apos;,
+             db = &apos;test&apos;,
+             user = &apos;root&apos;,
+             passwd = &apos;112233&apos;,
+             cursorclass = MySQLdb.cursors.DictCursor,
+             charset = &apos;utf8&apos;,
+             use_unicode = True
+            )
+        self.dbpool = adbapi.ConnectionPool(&apos;MySQLdb&apos;,**dbargs)
 
-        base64_userpass = base64.b64encode(self.proxy_auth)
-        #print proxy
-        request.meta[&apos;proxy&apos;] = &quot;http://&quot; + self.proxy
-        #if self.proxy_auth != None:
-        request.headers[&apos;Proxy-Authorization&apos;] = &quot;Basic &quot; + base64_userpass
+    &apos;&apos;&apos;
+    The default pipeline invoke function
+    &apos;&apos;&apos;
+    def process_item(self, item,spider):
+        res = self.dbpool.runInteraction(self.insert_into_table,item)
+        return item
+    #插入的表，此表需要事先建好
+    def insert_into_table(self,conn,item):
+            conn.execute(&apos;insert into douban(rank, title, rate,qute,link) values(%s,%s,%s,%s,%s)&apos;, (
+                item[&apos;rank&apos;][0],
+                item[&apos;title&apos;][0],
+                 # item[&apos;star&apos;][0],
+                 item[&apos;rate&apos;][0],
+                 item[&apos;quote&apos;][0],
+                 item[&apos;link&apos;][0])
+                )
+</code></pre><h3 id="2-改写为Scrapy-Redis后将redis缓存数据库中的内容转存到Mongodb或Mysql中。"><a href="#2-改写为Scrapy-Redis后将redis缓存数据库中的内容转存到Mongodb或Mysql中。" class="headerlink" title="2.改写为Scrapy-Redis后将redis缓存数据库中的内容转存到Mongodb或Mysql中。"></a>2.改写为Scrapy-Redis后将redis缓存数据库中的内容转存到Mongodb或Mysql中。</h3><p><strong>转存到Mongodb中<br>1.启动MongoDB数据库：sudo mongod<br>2.执行下面程序：py2 process_aqi_mongodb.py</strong></p>
+<pre><code># process_aqi_mongodb.py
+
+# -*- coding: utf-8 -*-
+
+import json
+import redis
+import pymongo
+
+def main():
+
+    # 指定Redis数据库信息
+    rediscli = redis.Redis(host=&apos;192.168.88.94&apos;, port=6379, db=0)
+    # 指定MongoDB数据库信息
+    mongocli = pymongo.MongoClient(host=&apos;127.0.0.1&apos;, port=27017)
+
+    # 创建数据库名
+    db = mongocli[&apos;aqi&apos;]
+    # 创建表名
+    sheet = db[&apos;aqi_data&apos;]
+
+    while True:
+        # FIFO模式为 blpop，LIFO模式为 brpop，获取键值
+        source, data = rediscli.blpop([&quot;aqi:items&quot;])
+
+        item = json.loads(data)
+        sheet.insert(item)
+
+        try:
+            print u&quot;Processing: %(name)s &lt;%(link)s&gt;&quot; % item
+        except KeyError:
+            print u&quot;Error procesing: %r&quot; % item
+
+if __name__ == &apos;__main__&apos;:
+    main()
+</code></pre><p>1.转存到Mysql中<br>2.启动mysql：mysql.server start（更平台不一样）<br>3.登录到root用户：mysql -uroot -p<br>4.创建数据库aqi:create database aqi;<br>5.切换到指定数据库：use aqi<br>6.创建表aqi_data以及所有字段的列名和数据类型。</p>
+<pre><code>#process_aqi_mysql.py
+
+# -*- coding: utf-8 -*-
+
+import json
+import redis
+import MySQLdb
+
+def main():
+    # 指定redis数据库信息
+    rediscli = redis.StrictRedis(host=&apos;192.168.88.94&apos;, port = 6379, db = 0)
+    # 指定mysql数据库
+    mysqlcli = MySQLdb.connect(host=&apos;127.0.0.1&apos;, user=&apos;root&apos;, passwd=&apos;xxxxxxx&apos;, db = &apos;aqi&apos;, port=3306, use_unicode=True)
+
+    while True:
+        # FIFO模式为 blpop，LIFO模式为 brpop，获取键值
+        source, data = rediscli.blpop([&quot;aqi:items&quot;])
+        item = json.loads(data)
+
+        try:
+            # 使用cursor()方法获取操作游标
+            cur = mysqlcli.cursor()
+            # 使用execute方法执行SQL INSERT语句
+            cur.execute(&quot;INSERT INTO aqi_data (city, date, aqi, level, pm2_5, pm10, so2, co, no2, o3, rank, spider, crawled) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)&quot;, [item[&apos;city&apos;], item[&apos;date&apos;], item[&apos;aqi&apos;], item[&apos;level&apos;], item[&apos;pm2_5&apos;], item[&apos;pm10&apos;], item[&apos;so2&apos;], item[&apos;co&apos;], item[&apos;no2&apos;], item[&apos;o3&apos;], item[&apos;rank&apos;], item[&apos;spider&apos;], item[&apos;crawled&apos;]])
+            # 提交sql事务
+            mysqlcli.commit()
+            #关闭本次操作
+            cur.close()
+        except MySQLdb.Error,e:
+            print &quot;Mysql Error %d: %s&quot; % (e.args[0], e.args[1])
+
+if __name__ == &apos;__main__&apos;:
+    main()
 </code></pre><h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
-<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="http://www.jianshu.com/p/9d408e21dc3a" target="_blank" rel="external">http://www.jianshu.com/p/9d408e21dc3a</a><br><a href="http://blog.csdn.net/tcorpion/article/details/70213435" target="_blank" rel="external">http://blog.csdn.net/tcorpion/article/details/70213435</a></p>
+<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="http://blog.csdn.net/qy20115549/article/details/52575291" target="_blank" rel="external">http://blog.csdn.net/qy20115549/article/details/52575291</a><br><a href="http://www.cnblogs.com/yccmelody/p/5416456.html" target="_blank" rel="external">http://www.cnblogs.com/yccmelody/p/5416456.html</a></p>
 
       
     </div>
@@ -442,9 +555,9 @@ class RandomProxy(object):
           
             <a href="/tags/python/" rel="tag"># python</a>
           
-            <a href="/tags/Phantomjs/" rel="tag"># Phantomjs</a>
-          
             <a href="/tags/spider/" rel="tag"># spider</a>
+          
+            <a href="/tags/scrapy/" rel="tag"># scrapy</a>
           
         </div>
       
@@ -457,8 +570,8 @@ class RandomProxy(object):
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/17/pytesseract机器识别常见问题/" rel="next" title="pytesseract机器识别常见问题">
-                <i class="fa fa-chevron-left"></i> pytesseract机器识别常见问题
+              <a href="/2017/07/24/将scary改写为scrapy-redis分布式爬虫基本操作/" rel="next" title="将scary改写为scrapy-redis分布式爬虫基本操作">
+                <i class="fa fa-chevron-left"></i> 将scary改写为scrapy-redis分布式爬虫基本操作
               </a>
             
           </div>
@@ -466,10 +579,6 @@ class RandomProxy(object):
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/17/selenium-python-linux环境搭建/" rel="prev" title="selenium+python+linux环境搭建">
-                selenium+python+linux环境搭建 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -589,7 +698,7 @@ class RandomProxy(object):
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#phantomJS的配置问题"><span class="nav-number">1.</span> <span class="nav-text">phantomJS的配置问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-phantomJS浏览器的配置，比如user-agent伪装、代理、超时返回等选项。"><span class="nav-number">1.1.</span> <span class="nav-text">1.phantomJS浏览器的配置，比如user-agent伪装、代理、超时返回等选项。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-phantomjs使用代理将会极大的拖累访问速度，一般使用scrapy框架中间件配置代理和User-Agent等。但如果使用Phantomjs则不在支持多线程并发。"><span class="nav-number">1.2.</span> <span class="nav-text">2. phantomjs使用代理将会极大的拖累访问速度，一般使用scrapy框架中间件配置代理和User-Agent等。但如果使用Phantomjs则不在支持多线程并发。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作者：陈亚坤"><span class="nav-number">1.3.</span> <span class="nav-text">作者：陈亚坤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邮箱：cykstart-163-com"><span class="nav-number">1.4.</span> <span class="nav-text">邮箱：cykstart@163.com</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版权声明"><span class="nav-number">1.5.</span> <span class="nav-text">版权声明:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料链接"><span class="nav-number">1.6.</span> <span class="nav-text">参考资料链接:</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-改写为Scrapy-Redis后将redis缓存数据库中的内容转存到Mongodb或Mysql中。"><span class="nav-number">1.</span> <span class="nav-text">2.改写为Scrapy-Redis后将redis缓存数据库中的内容转存到Mongodb或Mysql中。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作者：陈亚坤"><span class="nav-number">2.</span> <span class="nav-text">作者：陈亚坤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邮箱：cykstart-163-com"><span class="nav-number">3.</span> <span class="nav-text">邮箱：cykstart@163.com</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版权声明"><span class="nav-number">4.</span> <span class="nav-text">版权声明:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料链接"><span class="nav-number">5.</span> <span class="nav-text">参考资料链接:</span></a></li></ol></div>
             
 
           </div>
