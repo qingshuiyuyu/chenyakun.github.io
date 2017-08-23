@@ -197,7 +197,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -207,7 +207,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -240,6 +240,745 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/23/Mysql-特殊命令/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈亚坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈亚坤的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/08/23/Mysql-特殊命令/" itemprop="url">
+                  Mysql 特殊命令
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-23T23:33:09+08:00">
+                2017-08-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-MySQL中删除重复数据只保留一条"><a href="#1-MySQL中删除重复数据只保留一条" class="headerlink" title="1. MySQL中删除重复数据只保留一条"></a>1. MySQL中删除重复数据只保留一条</h2><h3 id="1-1查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断"><a href="#1-1查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断" class="headerlink" title="1.1查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断"></a>1.1查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断</h3><pre><code>SELECT * FROM people WHERE peopleId IN (
+SELECT peopleId FROM people GROUP BY peopleId HAVING count(peopleId) &gt; 1
+)
+</code></pre><h3 id="1-2-查看某个字段是否是唯一值"><a href="#1-2-查看某个字段是否是唯一值" class="headerlink" title="1.2 查看某个字段是否是唯一值"></a>1.2 查看某个字段是否是唯一值</h3><pre><code>select x,count(*) from xxx group by x having count(*)&gt;1;
+</code></pre><h3 id="1-3-删除表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断，只留有rowid最小的记录"><a href="#1-3-删除表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断，只留有rowid最小的记录" class="headerlink" title="1.3 删除表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断，只留有rowid最小的记录"></a>1.3 删除表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断，只留有rowid最小的记录</h3><pre><code>DELETE FROM people WHERE peopleName IN (
+SELECT peopleName FROM people GROUP BY peopleName HAVINGcount(peopleName) &gt; 1
+)
+AND peopleId NOT IN (SELECT min(peopleId) FROM people GROUP BY peopleName HAVING count(peopleName) &gt; 1
+)
+</code></pre><h3 id="1-4-查找表中多余的重复记录（多个字段）"><a href="#1-4-查找表中多余的重复记录（多个字段）" class="headerlink" title="1.4 查找表中多余的重复记录（多个字段）"></a>1.4 查找表中多余的重复记录（多个字段）</h3><pre><code>SELECT  * FROM  vitae a WHERE
+(a.peopleId, a.seq) IN ( SELECT  peopleId, seq FROM vitae GROUP BY
+peopleId, seq HAVING count(*) &gt; 1)
+</code></pre><h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
+<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="http://blog.csdn.net/u014723529/article/details/51218638" target="_blank" rel="external">http://blog.csdn.net/u014723529/article/details/51218638</a><br><a href="http://www.jb51.net/article/23964.htm" target="_blank" rel="external">http://www.jb51.net/article/23964.htm</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/23/Mysql-常见操作-索引操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈亚坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈亚坤的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/08/23/Mysql-常见操作-索引操作/" itemprop="url">
+                  Mysql 常见操作-索引操作
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-23T23:18:02+08:00">
+                2017-08-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-添加索引"><a href="#1-添加索引" class="headerlink" title="1.添加索引"></a>1.添加索引</h2><h3 id="1-1添加PRIMARY-KEY-主键索引"><a href="#1-1添加PRIMARY-KEY-主键索引" class="headerlink" title="1.1添加PRIMARY KEY(主键索引)"></a>1.1添加PRIMARY KEY(主键索引)</h3><pre><code>mysql&gt;alter table &apos;table_name&apos; add primary key (&apos;column&apos;);#字段名
+</code></pre><h3 id="1-2添加UNIQUE-唯一索引"><a href="#1-2添加UNIQUE-唯一索引" class="headerlink" title="1.2添加UNIQUE(唯一索引)"></a>1.2添加UNIQUE(唯一索引)</h3><pre><code>mysql&gt;ALTER TABLE `table_name` ADD UNIQUE (`column`);
+</code></pre><h3 id="1-3添加INDEX-普通索引"><a href="#1-3添加INDEX-普通索引" class="headerlink" title="1.3添加INDEX(普通索引)"></a>1.3添加INDEX(普通索引)</h3><pre><code>mysql&gt;ALTER TABLE `table_name` ADD INDEX index_name (`column`);#索引名 
+</code></pre><h3 id="1-4添加FULLTEXT-全文索引"><a href="#1-4添加FULLTEXT-全文索引" class="headerlink" title="1.4添加FULLTEXT(全文索引)"></a>1.4添加FULLTEXT(全文索引)</h3><pre><code>mysql&gt;ALTER TABLE `table_name` ADD FULLTEXT (`column`);
+</code></pre><h3 id="1-5添加多列索引"><a href="#1-5添加多列索引" class="headerlink" title="1.5添加多列索引"></a>1.5添加多列索引</h3><pre><code>mysql&gt;ALTER TABLE `table_name` ADD INDEX index_name (`column1`,`column2`, `column3`)
+</code></pre><h2 id="2-删除索引"><a href="#2-删除索引" class="headerlink" title="2.删除索引"></a>2.删除索引</h2><pre><code>DROP INDEX index_name ON talbe_name;#等同于第二句
+ALTER TABLE table_name DROP INDEX index_name;#等同于第一句
+ALTER TABLE table_name DROP PRIMARY KEY;#只适合删除主键
+</code></pre><h2 id="3-查看索引"><a href="#3-查看索引" class="headerlink" title="3.查看索引"></a>3.查看索引</h2><pre><code>mysql&gt; show index from tblname;
+mysql&gt; show keys from tblname;
+</code></pre><h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
+<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="http://www.cnblogs.com/zz-tt/p/6609828.html" target="_blank" rel="external">http://www.cnblogs.com/zz-tt/p/6609828.html</a><br><a href="http://www.jb51.net/article/32149.htm" target="_blank" rel="external">http://www.jb51.net/article/32149.htm</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/01/友情链接/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈亚坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈亚坤的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/08/01/友情链接/" itemprop="url">
+                  友情链接
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-01T14:47:42+08:00">
+                2017-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/01/Redis命令大全/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈亚坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈亚坤的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/08/01/Redis命令大全/" itemprop="url">
+                  Redis命令大全
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-01T14:46:49+08:00">
+                2017-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/01/Mysql命令大全/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈亚坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈亚坤的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/08/01/Mysql命令大全/" itemprop="url">
+                  Mysql命令大全
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-01T11:50:44+08:00">
+                2017-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>###1.连接mysql</p>
+<h4 id="1-1连接到本机的mysql"><a href="#1-1连接到本机的mysql" class="headerlink" title="1.1连接到本机的mysql"></a>1.1连接到本机的mysql</h4><p><strong>首先打开DOS窗口，然后进入目录mysql\bin，再键入命令mysql -u root -p，回车后提示你输密码.注意用户名前可以有空格也可以没有空格，但是密码前必须没有空格，否则让你重新输入密码。<br>如果刚安装好MYSQL，超级用户root是没有密码的，故直接回车即可进入到MYSQL中了，MYSQL的提示符是： mysql&gt;</strong></p>
+<h4 id="1-2连接远程的mysql"><a href="#1-2连接远程的mysql" class="headerlink" title="1.2连接远程的mysql"></a>1.2连接远程的mysql</h4><p><strong>假设远程主机的IP为：110.110.110.110，用户名为root,密码为abcd123。则键入以下命令：</strong></p>
+<pre><code>mysql -h110.110.110.110 -u root -p 123;
+</code></pre><p><strong>（注:u与root之间可以不用加空格，其它也一样）</strong></p>
+<h4 id="1-3退出mysql"><a href="#1-3退出mysql" class="headerlink" title="1.3退出mysql"></a>1.3退出mysql</h4><p><strong>exit （回车）</strong></p>
+<h3 id="2-修改密码"><a href="#2-修改密码" class="headerlink" title="2.修改密码"></a>2.修改密码</h3><p>格式：mysqladmin -u用户名 -p旧密码 password 新密码</p>
+<p>####2.1给root加个密码ab12。<br><strong>首先在DOS下进入目录mysql\bin，然后键入以下命令</strong>  </p>
+<pre><code>mysqladmin -u root -password ab12  
+</code></pre><p><strong>注：因为开始时root没有密码，所以-p旧密码一项就可以省略了。</strong></p>
+<p>####2.2再将root的密码改为djg345。<br>    mysqladmin -u root -p ab12 password djg345</p>
+<h3 id="3-增加用户"><a href="#3-增加用户" class="headerlink" title="3.增加用户"></a>3.增加用户</h3><p>格式：grant select on 数据库.* to 用户名@登录主机 identified by “密码”;</p>
+<p>####3.1 增加一个用户test1密码为abc，让他可以在任何主机上登录，并对所有数据库有查询、插入、修改、删除的权限。首先用root用户连入MYSQL，然后键入以下命令：</p>
+<pre><code>grant select,insert,update,delete on *.* to [email=test1@”%]test1@”%[/email]” Identified by “abc”;
+</code></pre><blockquote>
+<p><strong>但增加的用户是十分危险的，你想如某个人知道test1的密码，那么他就可以在internet上的任何一台电脑上登录你的mysql数据库并对你的数据可以为所欲为了，解决办法见2</strong></p>
+</blockquote>
+<p>####3.2 增加一个用户test2密码为abc,让他只可以在localhost上登录，并可以对数据库mydb进行查询、插入、修改、删除的操作<br><strong>（localhost指本地主机，即MYSQL数据库所在的那台主机），这样用户即使用知道test2的密码，他也无法从internet上直接访问数据库，只能通过MYSQL主机上的web页来访问了。</strong></p>
+<pre><code>grant select,insert,update,delete on mydb.* to [email=test2@localhost]test2@localhost[/email] identified by “abc”;
+</code></pre><p>如果你不想test2有密码，可以再打一个命令将密码消掉。<br>    grant select,insert,update,delete on mydb.* to [email=test2@localhost]test2@localhost[/email] identified by “”;</p>
+<h3 id="4-1-创建数据库"><a href="#4-1-创建数据库" class="headerlink" title="4.1 创建数据库"></a>4.1 创建数据库</h3><p>注意：创建数据库之前要先连接Mysql服务器<br>命令：create database &lt;数据库名&gt;  </p>
+<pre><code>greate database chenyakun charset=utf8;
+</code></pre><h4 id="4-1-1建立一个名为xhkdb的数据库"><a href="#4-1-1建立一个名为xhkdb的数据库" class="headerlink" title="4.1.1建立一个名为xhkdb的数据库"></a>4.1.1建立一个名为xhkdb的数据库</h4><pre><code>mysql&gt; create database xhkdb;
+</code></pre><h4 id="4-1-2创建数据库并分配用户"><a href="#4-1-2创建数据库并分配用户" class="headerlink" title="4.1.2创建数据库并分配用户"></a>4.1.2创建数据库并分配用户</h4><pre><code>CREATE DATABASE 数据库名;
+
+GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON 数据库名.* TO 数据库名@localhost IDENTIFIED BY &apos;密码&apos;;
+
+SET PASSWORD FOR &apos;数据库名&apos;@&apos;localhost&apos; = OLD_PASSWORD(&apos;密码&apos;);
+</code></pre><p>依次执行3个命令完成数据库创建。注意：中文 “密码”和“数据库”是户自己需要设置的。</p>
+<h3 id="4-2-显示数据库"><a href="#4-2-显示数据库" class="headerlink" title="4.2 显示数据库"></a>4.2 显示数据库</h3><p>命令：show databases （注意：最后有个s）</p>
+<pre><code>mysql&gt; show databases;
+</code></pre><p>注意：为了不再显示的时候乱码，要修改数据库默认编码。以下以GBK编码页面为例进行说明：</p>
+<pre><code>修改MYSQL的配置文件：my.ini里面修改default-character-set=gbk
+</code></pre><h3 id="4-3-删除数据库"><a href="#4-3-删除数据库" class="headerlink" title="4.3 删除数据库"></a>4.3 删除数据库</h3><h4 id="4-3-1删除一个已经确定存在的数据库"><a href="#4-3-1删除一个已经确定存在的数据库" class="headerlink" title="4.3.1删除一个已经确定存在的数据库"></a>4.3.1删除一个已经确定存在的数据库</h4><pre><code>mysql&gt; drop database drop_database;
+Query OK, 0 rows affected (0.00 sec)
+</code></pre><h4 id="4-3-2删除一个不确定存在的数据库"><a href="#4-3-2删除一个不确定存在的数据库" class="headerlink" title="4.3.2删除一个不确定存在的数据库"></a>4.3.2删除一个不确定存在的数据库</h4><pre><code>mysql&gt; drop database drop_database;
+ERROR 1008 (HY000): Can&apos;t drop database &apos;drop_database&apos;; database doesn&apos;t exist
+//发生错误，不能删除&apos;drop_database&apos;数据库，该数据库不存在。
+mysql&gt; drop database if exists drop_database;
+Query OK, 0 rows affected, 1 warning (0.00 sec)//产生一个警告说明此数据库不存在
+mysql&gt; create database drop_database;
+Query OK, 1 row affected (0.00 sec)
+mysql&gt; drop database if exists drop_database;//if exists 判断数据库是否存在，不存在也不产生错误
+Query OK, 0 rows affected (0.00 sec)
+</code></pre><h3 id="4-4-连接数据库"><a href="#4-4-连接数据库" class="headerlink" title="4.4 连接数据库"></a>4.4 连接数据库</h3><p>命令： use &lt;数据库名&gt;</p>
+<p>use 语句可以通告MySQL把db_name数据库作为默认（当前）数据库使用，用于后续语句。该数据库保持为默认数据库，直到语段的结尾，或者直到发布一个不同的USE语句：</p>
+<pre><code>mysql&gt; USE db1;
+mysql&gt; SELECT COUNT(*) FROM mytable;   # selects from db1.mytable
+mysql&gt; USE db2;
+mysql&gt; SELECT COUNT(*) FROM mytable;   # selects from db2.mytable
+</code></pre><p>使用USE语句为一个特定的当前的数据库做标记，不会阻碍您访问其它数据库中的表。下面的例子可以从db1数据库访问作者表，并从db2数据库访问编辑表：</p>
+<pre><code>mysql&gt; USE db1;
+mysql&gt; SELECT author_name,editor_name FROM author,db2.editor
+   -&gt;        WHERE author.editor_id = db2.editor.editor_id;
+</code></pre><h3 id="4-5-当前选择的数据库"><a href="#4-5-当前选择的数据库" class="headerlink" title="4.5 当前选择的数据库"></a>4.5 当前选择的数据库</h3><p>命令：mysql&gt; select database();</p>
+<h4 id="4-5-1显示MYSQL的版本"><a href="#4-5-1显示MYSQL的版本" class="headerlink" title="4.5.1显示MYSQL的版本"></a>4.5.1显示MYSQL的版本</h4><pre><code>mysql&gt; select version(); 
+</code></pre><h4 id="4-5-2-显示当前时间"><a href="#4-5-2-显示当前时间" class="headerlink" title="4.5.2 显示当前时间"></a>4.5.2 显示当前时间</h4><pre><code>mysql&gt; select now(); 
+</code></pre><h4 id="4-5-3显示年月日"><a href="#4-5-3显示年月日" class="headerlink" title="4.5.3显示年月日"></a>4.5.3显示年月日</h4><pre><code>SELECT DAYOFMONTH(CURRENT_DATE); 
+</code></pre><h4 id="4-5-4显示字符串"><a href="#4-5-4显示字符串" class="headerlink" title="4.5.4显示字符串"></a>4.5.4显示字符串</h4><pre><code>mysql&gt; SELECT &quot;welecome to my blog!&quot;; 
+</code></pre><h4 id="4-5-5当计算器用"><a href="#4-5-5当计算器用" class="headerlink" title="4.5.5当计算器用"></a>4.5.5当计算器用</h4><pre><code>select ((4 * 4) / 10 ) + 25; 
+</code></pre><h4 id="4-5-6串接字符串"><a href="#4-5-6串接字符串" class="headerlink" title="4.5.6串接字符串"></a>4.5.6串接字符串</h4><pre><code>select CONCAT(f_name, &quot; &quot;, l_name) 
+</code></pre><h3 id="4-6创建数据表"><a href="#4-6创建数据表" class="headerlink" title="4.6创建数据表"></a>4.6创建数据表</h3><p>命令：create table &lt;表名&gt; ( &lt;字段名1&gt; &lt;类型1&gt; [,..&lt;字段名n&gt; &lt;类型n&gt;]);</p>
+<pre><code>mysql&gt; create table MyClass(
+&gt; id int(4) not null primary key auto_increment,
+&gt; name char(20) not null,
+&gt; sex int(4) not null default &apos;0&apos;,
+&gt; degree double(16,2));
+</code></pre><h3 id="5-1-删除数据表"><a href="#5-1-删除数据表" class="headerlink" title="5.1 删除数据表"></a>5.1 删除数据表</h3><pre><code>命令：drop table &lt;表名&gt;
+</code></pre><p>DROP TABLE用于取消一个或多个表。您必须有每个表的DROP权限。所有的表数据和表定义会被取消，所以使用本语句要小心！</p>
+<h3 id="5-2-表插入数据"><a href="#5-2-表插入数据" class="headerlink" title="5.2 表插入数据"></a>5.2 表插入数据</h3><pre><code>命令：insert into &lt;表名&gt; [( &lt;字段名1&gt;[,..&lt;字段名n &gt; ])] values ( 值1 )[, ( 值n )]
+
+mysql&gt; insert into MyClass values(1,&apos;Tom&apos;,96.45),(2,&apos;Joan&apos;,82.99), (2,&apos;Wang&apos;, 96.59);
+</code></pre><p>注意：insert into每次只能向表中插入一条记录。</p>
+<h3 id="5-3-查询表中的数据"><a href="#5-3-查询表中的数据" class="headerlink" title="5.3 查询表中的数据"></a>5.3 查询表中的数据</h3><pre><code>命令： select &lt;字段1，字段2，...&gt; from &lt; 表名 &gt; where &lt; 表达式 &gt;
+#例如：查看表 MyClass 中所有数据
+mysql&gt; select * from MyClass;
+</code></pre><h3 id="5-4删除表中数据"><a href="#5-4删除表中数据" class="headerlink" title="5.4删除表中数据"></a>5.4删除表中数据</h3><p>命令：delete from 表名 where 表达式</p>
+<pre><code>mysql&gt; delete from MyClass where id=1;
+</code></pre><h3 id="5-5修改表中数据"><a href="#5-5修改表中数据" class="headerlink" title="5.5修改表中数据"></a>5.5修改表中数据</h3><p>语法：update 表名 set 字段=新值,… where 条件<br>    mysql&gt; update MyClass set name=’Mary’ where id=1;</p>
+<p>1.单表的MySQL UPDATE语句：</p>
+<pre><code>UPDATE [LOW_PRIORITY] [IGNORE] tbl_name SET col_name1=expr1 [, col_name2=expr2 ...] [WHERE where_definition] [ORDER BY ...] [LIMIT row_count]
+</code></pre><p>2.多表的UPDATE语句：</p>
+<pre><code>UPDATE [LOW_PRIORITY] [IGNORE] table_references SET col_name1=expr1 [, col_name2=expr2 ...] [WHERE where_definition]
+</code></pre><p>UPDATE语法可以用新值更新原有表行中的各列。SET子句指示要修改哪些列和要给予哪些值。WHERE子句指定应更新哪些行。如果没有WHERE子句，则更新所有的行。如果指定了ORDER BY子句，则按照被指定的顺序对行进行更新。LIMIT子句用于给定一个限值，限制可以被更新的行的数目。</p>
+<h3 id="5-6增加字段"><a href="#5-6增加字段" class="headerlink" title="5.6增加字段"></a>5.6增加字段</h3><p>命令：alter table 表名 add字段 类型 其他;</p>
+<pre><code>mysql&gt; alter table MyClass add passtest int(4) default &apos;0&apos;
+</code></pre><h4 id="5-6-1加索引"><a href="#5-6-1加索引" class="headerlink" title="5.6.1加索引"></a>5.6.1加索引</h4><pre><code>mysql&gt; alter table 表名 add index 索引名 (字段名1[，字段名2 …]);
+mysql&gt; alter table employee add index emp_name (name);
+</code></pre><h4 id="5-6-2加主关键字的索引"><a href="#5-6-2加主关键字的索引" class="headerlink" title="5.6.2加主关键字的索引"></a>5.6.2加主关键字的索引</h4><pre><code>mysql&gt; alter table 表名 add primary key (字段名);
+mysql&gt; alter table employee add primary key(id);
+</code></pre><h4 id="5-6-3加唯一限制条件的索引"><a href="#5-6-3加唯一限制条件的索引" class="headerlink" title="5.6.3加唯一限制条件的索引"></a>5.6.3加唯一限制条件的索引</h4><pre><code>mysql&gt; alter table 表名 add unique 索引名 (字段名);
+mysql&gt; alter table employee add unique emp_name2(cardnumber);
+</code></pre><h4 id="5-6-4删除某个索引"><a href="#5-6-4删除某个索引" class="headerlink" title="5.6.4删除某个索引"></a>5.6.4删除某个索引</h4><pre><code>mysql&gt; alter table 表名 drop index 索引名;
+mysql&gt;alter table employee drop index emp_name;
+</code></pre><h4 id="5-6-5增加字段"><a href="#5-6-5增加字段" class="headerlink" title="5.6.5增加字段"></a>5.6.5增加字段</h4><pre><code>ALTER TABLE table_name ADD field_name field_type;
+</code></pre><h4 id="5-6-6修改原字段名称及类型"><a href="#5-6-6修改原字段名称及类型" class="headerlink" title="5.6.6修改原字段名称及类型"></a>5.6.6修改原字段名称及类型</h4><pre><code>ALTER TABLE table_name CHANGE old_field_name new_field_name field_type;
+</code></pre><h4 id="5-6-7删除字段"><a href="#5-6-7删除字段" class="headerlink" title="5.6.7删除字段"></a>5.6.7删除字段</h4><pre><code>MySQL ALTER TABLE table_name DROP field_name;
+</code></pre><h3 id="5-7修改表名"><a href="#5-7修改表名" class="headerlink" title="5.7修改表名"></a>5.7修改表名</h3><p>命令：rename table 原表名 to 新表名;</p>
+<pre><code>mysql&gt; rename table MyClass to YouClass;
+</code></pre><p>当你执行 RENAME 时，你不能有任何锁定的表或活动的事务。你同样也必须有对原初表的 ALTER 和 DROP 权限，以及对新表的 CREATE 和 INSERT 权限。<br>如果在多表更名中，MySQL 遭遇到任何错误，它将对所有被更名的表进行倒退更名，将每件事物退回到最初状态。</p>
+<h3 id="5-8备份数据库"><a href="#5-8备份数据库" class="headerlink" title="5.8备份数据库"></a>5.8备份数据库</h3><p>命令在DOS的[url=file://\mysql\bin]\mysql\bin[/url]目录下执行</p>
+<h4 id="5-8-1导出整个数据库"><a href="#5-8-1导出整个数据库" class="headerlink" title="5.8.1导出整个数据库"></a>5.8.1导出整个数据库</h4><p>导出文件默认是存在mysql\bin目录下</p>
+<pre><code>mysqldump -u 用户名 -p 数据库名 &gt; 导出的文件名
+mysqldump -u user_name -p123456 database_name &gt; outfile_name.sql
+</code></pre><h4 id="5-8-2导出一个表"><a href="#5-8-2导出一个表" class="headerlink" title="5.8.2导出一个表"></a>5.8.2导出一个表</h4><pre><code>mysqldump -u 用户名 -p 数据库名 表名&gt; 导出的文件名
+mysqldump -u user_name -p database_name table_name &gt; outfile_name.sql
+</code></pre><h4 id="5-8-3导出一个数据库结构"><a href="#5-8-3导出一个数据库结构" class="headerlink" title="5.8.3导出一个数据库结构"></a>5.8.3导出一个数据库结构</h4><pre><code>mysqldump -u user_name -p -d –add-drop-table database_name &gt; outfile_name.sql
+-d 没有数据 –add-drop-table 在每个create语句之前增加一个drop table
+</code></pre><h4 id="5-8-4带语言参数导出"><a href="#5-8-4带语言参数导出" class="headerlink" title="5.8.4带语言参数导出"></a>5.8.4带语言参数导出</h4><pre><code>mysqldump -uroot -p –default-character-set=latin1 –set-charset=gbk –skip-opt database_name &gt; outfile_name.sql
+
+例如，将aaa库备份到文件back_aaa中：
+[root@test1 root]# cd　/home/data/mysql
+[root@test1 mysql]# mysqldump -u root -p --opt aaa &gt; back_aaa
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -287,7 +1026,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-24T22:06:27+08:00">
                 2017-07-24
@@ -583,7 +1322,7 @@ if __name__ == &apos;__main__&apos;:
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-24T21:42:44+08:00">
                 2017-07-24
@@ -758,7 +1497,7 @@ redis-cli&gt; lpush aqi:start_urls https://www.aqistudy.cn/historydata/
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T15:44:52+08:00">
                 2017-07-17
@@ -897,7 +1636,7 @@ driver.get(&quot;http://www.baidu.com&quot;)
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T14:45:33+08:00">
                 2017-07-17
@@ -1098,7 +1837,7 @@ class RandomProxy(object):
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T12:41:43+08:00">
                 2017-07-17
@@ -1144,981 +1883,6 @@ class RandomProxy(object):
 </blockquote>
 <h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
 <h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="http://blog.csdn.net/kezhen/article/details/42967789" target="_blank" rel="external">http://blog.csdn.net/kezhen/article/details/42967789</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/14/随机生成多为密码字符串的python代码实现/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈亚坤">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈亚坤的Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/14/随机生成多为密码字符串的python代码实现/" itemprop="url">
-                  随机生成多为密码字符串的python代码实现
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-14T16:46:34+08:00">
-                2017-07-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="一个随机生成多为字符串的代码实现"><a href="#一个随机生成多为字符串的代码实现" class="headerlink" title="一个随机生成多为字符串的代码实现"></a>一个随机生成多为字符串的代码实现</h2><blockquote>
-<p><strong>可作为API接口，用作账户自动化注册，详情看注释</strong></p>
-</blockquote>
-<pre><code>#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @Date    : 2017-07-13 21:47:18
-# @Author  : chen_yakun (cykstart@163.com)
-# @Link    : www.pychen.tech
-# @Version : $Id$
-
-#python随机生成10位数的字符串的代码实现，可以用为生成随机密码
-import string
-import random
-
-#list为26个英文字母的大小写，和0-9之间的数字
-list = list(string.lowercase+string.uppercase)+[str(i) for i in range(10)]
-#符号
-symbols = (&apos;!&apos;,&apos;@&apos;,&apos;#&apos;,&apos;$&apos;,&apos;%&apos;,&apos;&amp;&apos;,&apos;_&apos;)
-
-def randon_num():
-    for f in symbols:
-        list.append(f)
-    #random.sample()可以从指定的序列中，随机的截取指定长度的片断，不作原地修改。
-    num = random.sample(list,10)
-    value = &apos;&apos;.join(num) #将取出的十个随机数进行重新合并
-
-    #判断字符串是否是以数字开头,如果不是则返回return值
-    #如果是则再次递归调用该函数    
-    if not value[0].isdigit():
-          return value
-      return randon_num()
-
-if __name__ == &apos;__main__&apos;:
-    test = randon_num()
-    print(test)
-</code></pre><blockquote>
-<p><strong>当随机出来的字符串是以数字开头时，递归调用该函数！</strong></p>
-</blockquote>
-<h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
-<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="http://www.jb51.net/article/116399.htm" target="_blank" rel="external">http://www.jb51.net/article/116399.htm</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/知乎模拟登陆/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈亚坤">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈亚坤的Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/07/05/知乎模拟登陆/" itemprop="url">
-                  知乎模拟登陆
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-05T18:57:13+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="知乎模拟登陆"><a href="#知乎模拟登陆" class="headerlink" title="知乎模拟登陆"></a>知乎模拟登陆</h1><h3 id="直接上代码了，注意点都在注释！代码下面有重点说明！"><a href="#直接上代码了，注意点都在注释！代码下面有重点说明！" class="headerlink" title="直接上代码了，注意点都在注释！代码下面有重点说明！"></a>直接上代码了，注意点都在注释！代码下面有重点说明！</h3><pre><code>#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-
-import requests
-import time
-#引入Xpath解析器
-from lxml import etree
-
-#处理下载验证码
-def captcha(cha):
-    with open(&apos;captcha.jpg&apos;,&apos;w&apos;)as f:
-        f.write(cha)
-    return raw_input(&apos;请输入验证码：&apos;)
-
-def zhihu_login():
-
-    #1.重点：在登录过程中要保持cookie
-    ss = requests.Session()
-    #2.重点：此处url要与下面formdata的代码相对应
-    url = &apos;https://www.zhihu.com/login/phone_num&apos;#此处为手机账号登陆
-    #url = &apos;https://www.zhihu.com/login/email&apos;#此处为邮箱登陆
-
-    #3.必须添加user-agent
-    headers = {&apos;User-Agent&apos;:&apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.7 Safari/537.36&apos;}
-    #4.获取登录页面
-    response = ss.get(url,headers=headers).content
-    #转换成lxml
-    html = etree.HTML(response)
-    #5.获取_xsrf验证码
-    _xsrf = html.xpath(&quot;//div[@class=&apos;view view-signin&apos;]//input[@name=&apos;_xsrf&apos;]/@value&quot;)
-
-    #6.获取验证码链接，我直接写了，也可以跟url拼接
-    captcha_url = &quot;https://www.zhihu.com/captcha.gif?r=%d&amp;type=login&quot; % (time.time() * 1000)
-
-    #7.获取验证码图片
-    cha = ss.get(captcha_url,headers = headers).content
-
-    #8.构建post
-    formdata = {
-        &quot;_xsrf&quot;:_xsrf[0],#为了说明：我是用Xpath提取，_xsrf为一个元素的列表[&quot;值&quot;]，可以写在上面
-        &quot;password&quot;:&apos;xxxxxxx&apos;,#登陆密码
-        &quot;phone_num&quot;:&apos;xxxxxxxxx&apos;,#你的注册手机账号--必须与url：(/login/phone_num)相对应
-        #“email”:&quot;xxx@163.com&quot;#你的注册邮箱--必须与url：(/login/email)相对应
-        &apos;captcha&apos;:captcha(cha),#处理验证码
-    }
-
-    #9.把formdata里面的信息post到服务器登陆
-    ss.post(url,headers=headers,data=formdata)
-    #10.获取一个需要登陆后才能看到的页面，验证是否登陆成功
-    response = ss.get(&apos;https://www.zhihu.com/settings/profile&apos;,headers=headers).content
-
-    with open(&quot;shezhi.html&quot;, &quot;w&quot;) as f:
-            f.write(response)
-
-if __name__==&quot;__main__&quot;:
-    zhihu_login()
-</code></pre><h3 id="重点："><a href="#重点：" class="headerlink" title="重点："></a><strong>重点：</strong></h3><blockquote>
-<p><strong>1.登陆页面URL与在网页上看到的不一样，且要与post里面的账号类型相对应，可以通过抓包(推荐：Fiddler)获得</strong>  </p>
-<p><strong>2.一定要带cookie和_cxrf发出请求,跳过网站防跨站攻击验证(cxrf)</strong></p>
-<p><strong>3.验证码为手动输入，运行到输入验证码出，刷新文件夹，打开图片输入即可，后期可以加机器识别</strong>  </p>
-<p><strong>4.注意formdata里面不要加”captcha_type”：”cn”,否则，验证码为汉字！</strong>  </p>
-</blockquote>
-<h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/25/re正则表达式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈亚坤">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈亚坤的Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/25/re正则表达式/" itemprop="url">
-                  re正则表达式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-25T11:51:39+08:00">
-                2017-06-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="正则表达式总结"><a href="#正则表达式总结" class="headerlink" title="正则表达式总结"></a>正则表达式总结</h2><h3 id="一、检验数字的表达式"><a href="#一、检验数字的表达式" class="headerlink" title="一、检验数字的表达式"></a><strong>一、检验数字的表达式</strong></h3><ol>
-<li><p>数字: ^[0-9]*$</p>
-<pre><code>#也可以写作 m = re.match(&quot;^\d*$&quot;,&quot;32873&quot;)
-m = re.match(&quot;^[0-9]*$&quot;,&quot;32873&quot;)
-print m.group()
-&gt;&gt;&gt;32873
-</code></pre></li>
-<li><p>n位的数字:^[\d]{n}$</p>
-<pre><code>m = re.match(&quot;^\d{4}$&quot;,&quot;4565&quot;)
-print m.group()
-&gt;&gt;&gt;4565
-</code></pre></li>
-<li><p>至少n位数字:^[\d]{n,}$</p>
-<pre><code>m = re.match(&quot;^\d{4,}$&quot;,&quot;453265&quot;)
-print m.group()
-&gt;&gt;&gt;453265
-</code></pre></li>
-<li><p>m-n位的数字:^[\d]{m,n}$</p>
-<pre><code>m = re.match(&quot;^\d{4,12}$&quot;,&quot;453266&quot;)
-print m.group()
-&gt;&gt;&gt;453266
-</code></pre></li>
-<li><p>零和非零开头的数字:^(0|[1-9][0-9]*)$ </p>
-<pre><code>#a=0,可以 a=0124 不可以
-m = re.match(&quot;^(0|[1-9][0-9]*)$&quot;,&quot;787&quot;)
-print m.group()
-</code></pre></li>
-<li><p>零和非零开头的数字，最多带两位小数数字：^(0|[1-9][0-9]*)+(.[0-9]{1,2})?$</p>
-<pre><code>m = re.match(&quot;^(0|[1-9][0-9]*)+(.[0-9]{1,2})?$&quot;,&quot;7850.04&quot;)
-print m.group()
-&gt;&gt;&gt;7850.04
-</code></pre></li>
-<li><p>带一到两位小数的整数或负数 :^(-)?\d+(.\d{1,2})?$</p>
-<pre><code>m = re.match(&quot;^(\-)?\d+(\.\d{1,2})?$&quot;,&quot;-7850.00&quot;)
-print m.group()
-&gt;&gt;&gt;-7850.00
-</code></pre></li>
-<li><p>整数，负数，小数: ^(-|+)?\d+(.\d+)?$</p>
-<pre><code>#有BUG，0既不是整数，也不是负数，单也可以匹配
-m = re.match(&quot;^(\-|\+)?\d+(\.\d+)?$&quot;,&quot;+0.2&quot;)
-print m.group()
-&gt;&gt;&gt;+0.2
-</code></pre></li>
-<li><p>有两位小数的正实数:^(\d+)+(.\d{2})$</p>
-<pre><code>m = re.match(&quot;^(\d+)+(\.\d{2})$&quot;,&quot;12.00&quot;)
-print m.group()
-&gt;&gt;&gt;12.00
-</code></pre></li>
-</ol>
-<p>10.有一到三位的正实数：^(\d+)+(.\d{1,3})$        </p>
-<pre><code>m = re.match(&quot;^(\d+)+(\.\d{1,3})$&quot;,&quot;12.000&quot;)
-print m.group()
-</code></pre><ol>
-<li><p>非零的正整数: ^(+)?[1-9]\d*$</p>
-<pre><code>m = re.match(&quot;^(\+)?[1-9]\d*$&quot;,&quot;+12&quot;)
-print m.group()
-&gt;&gt;&gt;+12
-</code></pre></li>
-</ol>
-<p>12.非零的负整数:^(+)?[1-9]\d*$</p>
-<pre><code>m = re.match(&quot;^(\-)[1-9]\d*$&quot;,&quot;-12&quot;)
-print m.group()
-&gt;&gt;&gt;-12
-</code></pre><ol>
-<li><p>非负整数： ^(+)?\d+$</p>
-<pre><code>m = re.match(&quot;^(\+)?\d+$&quot;,&quot;03&quot;)
-print m.group()
-&gt;&gt;&gt;03
-</code></pre></li>
-<li><p>非正整数:^(-)\d+$</p>
-<pre><code>m = re.match(&quot;^(\-)\d+$&quot;,&quot;-3&quot;)
-print m.group()
-&gt;&gt;&gt;-3
-</code></pre></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/14/python语法糖/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈亚坤">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈亚坤的Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/14/python语法糖/" itemprop="url">
-                  python中好玩的语法糖(1)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-14T00:44:48+08:00">
-                2017-06-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="python中的语法糖"><a href="#python中的语法糖" class="headerlink" title="python中的语法糖"></a><strong>python中的语法糖</strong></h1><h2 id="1-列表转换"><a href="#1-列表转换" class="headerlink" title="1.列表转换"></a>1.列表转换</h2><blockquote>
-<p>对于一个列表如list1 = [[1,2],[3,4,5],[6,7],[8,9]]要将其转化为list2 = [1,2,3,4,5,6,7,8,9]下面讨论其中三种方法：</p>
-</blockquote>
-<h3 id="一般方法"><a href="#一般方法" class="headerlink" title="一般方法"></a><strong>一般方法</strong></h3><pre><code>list1 = [[1,2],[3,4,5],[6,7],[8,9]]
-list2 = []
-for i in list1:
-    list2+=i
-print (list2)
-&gt;&gt;&gt;[1, 2, 3, 4, 5, 6, 7, 8, 9]
-</code></pre><h3 id="2-Pythonic的方法，列表推导式"><a href="#2-Pythonic的方法，列表推导式" class="headerlink" title="2.Pythonic的方法，列表推导式"></a><strong>2.Pythonic的方法，列表推导式</strong></h3><pre><code>list1 = [[1,2],[3,4,5],[6,7],[8,9]]
-list2 = [i   for k in list1  for i in k ]#使用两层列表推到式
-print(list2)
-&gt;&gt;&gt;[1, 2, 3, 4, 5, 6, 7, 8, 9]
-</code></pre><h3 id="3-调用sum-函数-好用但不推荐"><a href="#3-调用sum-函数-好用但不推荐" class="headerlink" title="3.调用sum()函数(好用但不推荐)"></a><strong>3.调用sum()函数(好用但不推荐)</strong></h3><pre><code>list1 = [[1,2],[3,4,5],[6,7],[8,9]]
-list2 = sum(list1,[])
-print(list2)
-&gt;&gt;&gt;[1, 2, 3, 4, 5, 6, 7, 8, 9]
-</code></pre><blockquote>
-<p>sum()函数：<br>sum(iterable[, start]) ，#iterable为可迭代对象<br>sum([ ], start)     #iterable为list列表<br>sum(( ), start )    #iterable为tuple元组<br>sum函数最后的值 = 可迭代对象里面的数相加的值 + start的值，其中start可以不写，默认为0</p>
-</blockquote>
-<pre><code>sum([1, 2, 3,], 4)
-&gt;&gt;&gt;10
-
-list1 = [[1,2],[3,4,5],[6,7],[8,9]]
-list2 = sum(list1,[1,8])
-print(list2)
-&gt;&gt;&gt;[1, 8, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-</code></pre><h3 id="4-sum-函数与列表推导式组合"><a href="#4-sum-函数与列表推导式组合" class="headerlink" title="4.sum()函数与列表推导式组合"></a><strong>4.sum()函数与列表推导式组合</strong></h3><pre><code>from math import sqrt
-a = range(1, 11)
-b = range(1, 10)
-c = sum([item for item in a if item in b])#sum([1,2,3,4,5,6,7,8,9],[])
-print c
-&gt;&gt;&gt;45
-</code></pre><h3 id="5大神代码"><a href="#5大神代码" class="headerlink" title="5大神代码"></a><strong>5大神代码</strong></h3><pre><code>from math import sqrt
-</code></pre><p>def sim_distance(prefs, person1, person2):</p>
-<pre><code># 得到shared_items的列表
-si = {}
-for item in prefs[person1]:
-    if item in prefs[person2]:
-        si[item] = 1
-
-# 如果两者没有共同之处，则返回0
-if len(si) == 0: return 0
-
-# 计算所有差值的平方和
-sum_of_squares = sum([pow(prefs[person1][item] - prefs[person2][item], 2) 
-                    for item in prefs[person1] if item in prefs[person2]])
-
-return 1/(1 + sqrt(sum_of_squares))
-</code></pre><h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
-<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="http://blog.csdn.net/cloume/article/details/65971925" target="_blank" rel="external">http://blog.csdn.net/cloume/article/details/65971925</a><br><a href="https://www.zhihu.com/question/57470958" target="_blank" rel="external">https://www.zhihu.com/question/57470958</a></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/11/Python中巧妙内置函数分析/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="陈亚坤">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="陈亚坤的Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/06/11/Python中巧妙内置函数分析/" itemprop="url">
-                  python内置函数分析(1)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-11T02:01:12+08:00">
-                2017-06-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="python内置函数分析-1"><a href="#python内置函数分析-1" class="headerlink" title="python内置函数分析(1)"></a><strong>python内置函数分析(1)</strong></h1><blockquote>
-<p>PYTHON中内置了一些巧妙而强大的内置函数，熟练使用这些函数，代码不仅简洁易读了许多，既方便有减少了很多的BUG。</p>
-</blockquote>
-<h2 id="1-sorted"><a href="#1-sorted" class="headerlink" title="1.sorted()"></a><strong>1.sorted()</strong></h2><h3 id="1-对一个列表进行排序"><a href="#1-对一个列表进行排序" class="headerlink" title="1)对一个列表进行排序"></a><strong>1)对一个列表进行排序</strong></h3><pre><code>a = [100,82,12,55,45]
-sorted(a)
-&gt;&gt;&gt;[12,45,55,88,100]  
-
-#sorted()与sort()区别：
-#sorted()返回一个新的list，新的list基于小于运算符排列
-In [11]: a = [1,4,8,3,12]
-In [12]: b=sorted(a)
-In [13]: a
-Out[13]: [1, 4, 8, 3, 12]
-In [14]: b
-Out[14]: [1, 3, 4, 8, 12]
-#list.sort(),list本身被修改，通常不如soted()方便，如不需要原list，可以选用这种方法
-In [16]: a=[1,4,23,5,2] 
-In [17]: a.sort()
-In [18]: a
-Out[18]: [1, 2, 4, 5, 23]
-In [19]: b = a.sort()
-In [20]: b
-</code></pre><h3 id="2-通过key参数-函数"><a href="#2-通过key参数-函数" class="headerlink" title="2)通过key参数/函数"></a><strong>2)通过key参数/函数</strong></h3><p> 例：长列表中嵌套字典元素,按照每个元素的长度进行排序(这里使用匿名函数lambda)</p>
-<pre><code>list1 = [{2:6,8:2},{1:7},{1:2,5:12,9:2}]
-new_list = sorted(list1,key = lambda x:len(x))
-print(new_list)
-&gt;&gt;&gt;[{1: 7}, {8: 2, 2: 6}, {1: 2, 5: 12, 9: 2}]
-</code></pre><h3 id="3-对由tuple组成的list进行排序"><a href="#3-对由tuple组成的list进行排序" class="headerlink" title="3)对由tuple组成的list进行排序"></a><strong>3)对由tuple组成的list进行排序</strong></h3><p>例：对一群人里面的年龄的list进行排序</p>
-<pre><code>people = [(&apos;laownag&apos;,&apos;man&apos;,&apos;23&apos;),(&apos;xiaoli&apos;,&apos;woman&apos;,&apos;21&apos;),(&apos;xiaozhang&apos;,&apos;man&apos;,&apos;17&apos;)]
-new_people = sorted(people,key = lambda x:x[2])
-print(new_people)
-&gt;&gt;&gt;[(&apos;xiaozhang&apos;, &apos;man&apos;, &apos;17&apos;), (&apos;xiaoli&apos;, &apos;woman&apos;, &apos;21&apos;), (&apos;laownag&apos;, &apos;man&apos;, &apos;23&apos;)]
-</code></pre><h3 id="4-用cmp函数排序"><a href="#4-用cmp函数排序" class="headerlink" title="4)用cmp函数排序"></a><strong>4)用cmp函数排序</strong></h3><p>python3中，cmp函数被operator模块取代，需要导入<br>cmp(x,y),如果x&gt;y,返回1，x&lt;y,返回-1，x==y,返回0</p>
-<pre><code>people = [(&apos;laownag&apos;,&apos;man&apos;,&apos;23&apos;),(&apos;xiaoli&apos;,&apos;woman&apos;,&apos;21&apos;),(&apos;xiaozhang&apos;,&apos;man&apos;,&apos;17&apos;)]
-new_people = sorted(people,cmp = lambda x，y:cmp(x[0],y[0])))
-print(new_people)
-&gt;&gt;&gt;[(&apos;laownag&apos;, &apos;man&apos;, &apos;23&apos;), (&apos;xiaoli&apos;, &apos;woman&apos;, &apos;21&apos;), (&apos;xiaozhang&apos;, &apos;man&apos;, &apos;17&apos;)]
-</code></pre><h2 id="2-map"><a href="#2-map" class="headerlink" title="2.map()"></a><strong>2.map()</strong></h2><p>map函数跟根据提供的函数对制定序列做排序，接受一个函数f和一个list，并把函数f以此作用于每个list函数，然后返回一个新的list,map的函数的参数可以为多个，<strong>注意:这个函数一定要有返回值</strong></p>
-<pre><code>def func(x):
-    return x*x
-print(map(func([1,2,3,4,5])))
-&gt;&gt;&gt;[1, 4, 9, 16, 25]
-
-def add_x_y(x,y):
-return x+y
-print (map(add_x_y,[1,2,3,4,5],[2,3,4,5,6]))#必须len(x)==len(y)
-&gt;&gt;&gt;[3, 5, 7, 9, 11]
-</code></pre><h2 id="3-enumerate"><a href="#3-enumerate" class="headerlink" title="3.enumerate()"></a><strong>3.enumerate()</strong></h2><p>enumerate函数用于遍历序列中的元素以及它们的下标,多用于在for循环中得到计数,enumerate参数为可遍历的变量，如 字符串，列表等</p>
-<pre><code>#enumerate函数定义
-def enumerate(collection): 
-    &apos;Generates an indexed series: (0,coll[0]), (1,coll[1]) ...&apos;   
-       i = 0 
-       it = iter(collection) #将参数转换为可迭代对象
-       while 1: 
-       yield (i, it.next()) #生成迭代器
-       i += 1
-</code></pre><blockquote>
-<p>代码实现1</p>
-</blockquote>
-<pre><code>#代码实现1
-i = 0
-seq = [&apos;one&apos;, &apos;two&apos;, &apos;three&apos;]
-for element in seq:
-    print i, seq[i]
-    i += 1
-&gt;&gt;
-0 one
-1 two
-2 three
-</code></pre><blockquote>
-<p>代码实现2</p>
-</blockquote>
-<pre><code>#代码实现2
-seq = [&apos;one&apos;, &apos;two&apos;, &apos;three&apos;]
-for i, element in enumerate(seq):
-    print i, seq[i]
-&gt;&gt;
-0 one
-1 two
-2 three
-</code></pre><blockquote>
-<p>代码实现3</p>
-</blockquote>
-<pre><code>#代码实现3
-for i,j in enumerate(&apos;abc&apos;):
-print i,j
-
-&gt;&gt;
-0 a
-1 b
-2 c
-</code></pre><h2 id="4-zip"><a href="#4-zip" class="headerlink" title="4.zip()"></a><strong>4.zip()</strong></h2><blockquote>
-<p>zip函数接收人一多个(包括0或1)序列作为参数，返回一个tuple  </p>
-<p>示例1</p>
-</blockquote>
-<pre><code>x=[1,2,3]
-y=[4,5,6]
-z=[7,8,9]
-xyz=zip(x,y,z)
-print(xyz)
-&gt;&gt;&gt;[(1, 4, 7), (2, 5, 8), (3, 6, 9)]
-</code></pre><blockquote>
-<p>示例2</p>
-</blockquote>
-<pre><code>x = [1, 2, 3]
-y = [4, 5, 6, 7]
-xy = zip(x, y)
-print xy
-&gt;&gt;&gt;[(1, 4), (2, 5), (3, 6)]
-</code></pre><blockquote>
-<p>示例3</p>
-</blockquote>
-<pre><code>#示例3
-x = [1, 2, 3]
-y = [4, 5, 6]
-z = [7, 8, 9]
-xyz = zip(x, y, z)
-u = zip(*xyz)
-print u
-&gt;&gt;&gt;[(1, 2, 3), (4, 5, 6), (7, 8, 9)]
-</code></pre><blockquote>
-<p>一般认为这是一个unzip的过程，它的运行机制是这样的：<br>在运行zip(*xyz)之前，xyz的值是：[(1, 4, 7), (2, 5, 8), (3, 6, 9)]<br>那么，zip(*xyz) 等价于 zip((1, 4, 7), (2, 5, 8), (3, 6, 9))<br>所以，运行结果是：[(1, 2, 3), (4, 5, 6), (7, 8, 9)]</p>
-</blockquote>
-<pre><code>#示例4
-x = [1, 2, 3]
-r = zip(* [x] * 3)
-print r
-&gt;&gt;&gt;[(1, 1, 1), (2, 2, 2), (3, 3, 3)]
-</code></pre><p>&gt;<br>它的运行机制是这样的：<br>[x]生成一个列表的列表，它只有一个元素x<br>[x] * 3生成一个列表的列表，它有3个元素，[x, x, x]<br>zip(* [x] * 3)的意思就明确了，zip(x, x, x)  </p>
-<h2 id="5-filter"><a href="#5-filter" class="headerlink" title="5.filter()"></a><strong>5.filter()</strong></h2><blockquote>
-<p>filter函数是接收一函数f,和一个list，这个函数是对每个函数进行判断返回True或者False,依次来过滤掉一些不符合条件的元素，返回符合元素的list.<strong>跟if判断添加list相似</strong></p>
-</blockquote>
-<pre><code>def is_num(x):
-    return x%2==0
-print(filter(is_num,[1,2,3,4,5,6,7]))
-&gt;&gt;&gt;[2, 4, 6]
-</code></pre><blockquote>
-<p>处理文件时，把一些不需要的空格，回车，空字符去掉</p>
-</blockquote>
-<pre><code>def is_not_empty(x):
-&apos;strip() 方法用于移除字符串头尾指定的字符（默认为空格）&apos;
-    return x in len(x.strip())&gt;0#不返回空列表
-print(filter(is_not_empty,[&apos;abc&apos;,&apos;&apos;,&apos;book&apos;,&apos;apple&apos;,&apos;\t&apos;,&apos;\n&apos;]))
-&gt;&gt;&gt; [&apos;abc&apos;, &apos;book&apos;, &apos;apple&apos;]
-</code></pre><h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
-<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="https://zhuanlan.zhihu.com/p/26097557" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/26097557</a><br><a href="http://www.cnblogs.com/frydsh/archive/2012/07/10/2585370.html" target="_blank" rel="external">http://www.cnblogs.com/frydsh/archive/2012/07/10/2585370.html</a><br><a href="http://www.pythontab.com/html/2016/pythonjichu_1213/1111.html" target="_blank" rel="external">http://www.pythontab.com/html/2016/pythonjichu_1213/1111.html</a>  </p>
 
           
         
@@ -2202,8 +1966,8 @@ print(filter(is_not_empty,[&apos;abc&apos;,&apos;&apos;,&apos;book&apos;,&apos;a
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -2215,8 +1979,8 @@ print(filter(is_not_empty,[&apos;abc&apos;,&apos;&apos;,&apos;book&apos;,&apos;a
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -2266,11 +2030,11 @@ print(filter(is_not_empty,[&apos;abc&apos;,&apos;&apos;,&apos;book&apos;,&apos;a
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
-  Theme -
+  Thème -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Muse
   </a>

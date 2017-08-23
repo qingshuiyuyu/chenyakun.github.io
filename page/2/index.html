@@ -197,7 +197,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -207,7 +207,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -240,6 +240,984 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/14/随机生成多为密码字符串的python代码实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈亚坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈亚坤的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/14/随机生成多为密码字符串的python代码实现/" itemprop="url">
+                  随机生成多为密码字符串的python代码实现
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-14T16:46:34+08:00">
+                2017-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="一个随机生成多为字符串的代码实现"><a href="#一个随机生成多为字符串的代码实现" class="headerlink" title="一个随机生成多为字符串的代码实现"></a>一个随机生成多为字符串的代码实现</h2><blockquote>
+<p><strong>可作为API接口，用作账户自动化注册，详情看注释</strong></p>
+</blockquote>
+<pre><code>#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Date    : 2017-07-13 21:47:18
+# @Author  : chen_yakun (cykstart@163.com)
+# @Link    : www.pychen.tech
+# @Version : $Id$
+
+#python随机生成10位数的字符串的代码实现，可以用为生成随机密码
+import string
+import random
+
+#list为26个英文字母的大小写，和0-9之间的数字
+list = list(string.lowercase+string.uppercase)+[str(i) for i in range(10)]
+#符号
+symbols = (&apos;!&apos;,&apos;@&apos;,&apos;#&apos;,&apos;$&apos;,&apos;%&apos;,&apos;&amp;&apos;,&apos;_&apos;)
+
+def randon_num():
+    for f in symbols:
+        list.append(f)
+    #random.sample()可以从指定的序列中，随机的截取指定长度的片断，不作原地修改。
+    num = random.sample(list,10)
+    value = &apos;&apos;.join(num) #将取出的十个随机数进行重新合并
+
+    #判断字符串是否是以数字开头,如果不是则返回return值
+    #如果是则再次递归调用该函数    
+    if not value[0].isdigit():
+          return value
+      return randon_num()
+
+if __name__ == &apos;__main__&apos;:
+    test = randon_num()
+    print(test)
+</code></pre><blockquote>
+<p><strong>当随机出来的字符串是以数字开头时，递归调用该函数！</strong></p>
+</blockquote>
+<h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
+<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="http://www.jb51.net/article/116399.htm" target="_blank" rel="external">http://www.jb51.net/article/116399.htm</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/知乎模拟登陆/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈亚坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈亚坤的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/05/知乎模拟登陆/" itemprop="url">
+                  知乎模拟登陆
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-05T18:57:13+08:00">
+                2017-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="知乎模拟登陆"><a href="#知乎模拟登陆" class="headerlink" title="知乎模拟登陆"></a>知乎模拟登陆</h1><h3 id="直接上代码了，注意点都在注释！代码下面有重点说明！"><a href="#直接上代码了，注意点都在注释！代码下面有重点说明！" class="headerlink" title="直接上代码了，注意点都在注释！代码下面有重点说明！"></a>直接上代码了，注意点都在注释！代码下面有重点说明！</h3><pre><code>#!/usr/bin/env python
+# -*- coding:utf-8 -*-
+
+import requests
+import time
+#引入Xpath解析器
+from lxml import etree
+
+#处理下载验证码
+def captcha(cha):
+    with open(&apos;captcha.jpg&apos;,&apos;w&apos;)as f:
+        f.write(cha)
+    return raw_input(&apos;请输入验证码：&apos;)
+
+def zhihu_login():
+
+    #1.重点：在登录过程中要保持cookie
+    ss = requests.Session()
+    #2.重点：此处url要与下面formdata的代码相对应
+    url = &apos;https://www.zhihu.com/login/phone_num&apos;#此处为手机账号登陆
+    #url = &apos;https://www.zhihu.com/login/email&apos;#此处为邮箱登陆
+
+    #3.必须添加user-agent
+    headers = {&apos;User-Agent&apos;:&apos;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.7 Safari/537.36&apos;}
+    #4.获取登录页面
+    response = ss.get(url,headers=headers).content
+    #转换成lxml
+    html = etree.HTML(response)
+    #5.获取_xsrf验证码
+    _xsrf = html.xpath(&quot;//div[@class=&apos;view view-signin&apos;]//input[@name=&apos;_xsrf&apos;]/@value&quot;)
+
+    #6.获取验证码链接，我直接写了，也可以跟url拼接
+    captcha_url = &quot;https://www.zhihu.com/captcha.gif?r=%d&amp;type=login&quot; % (time.time() * 1000)
+
+    #7.获取验证码图片
+    cha = ss.get(captcha_url,headers = headers).content
+
+    #8.构建post
+    formdata = {
+        &quot;_xsrf&quot;:_xsrf[0],#为了说明：我是用Xpath提取，_xsrf为一个元素的列表[&quot;值&quot;]，可以写在上面
+        &quot;password&quot;:&apos;xxxxxxx&apos;,#登陆密码
+        &quot;phone_num&quot;:&apos;xxxxxxxxx&apos;,#你的注册手机账号--必须与url：(/login/phone_num)相对应
+        #“email”:&quot;xxx@163.com&quot;#你的注册邮箱--必须与url：(/login/email)相对应
+        &apos;captcha&apos;:captcha(cha),#处理验证码
+    }
+
+    #9.把formdata里面的信息post到服务器登陆
+    ss.post(url,headers=headers,data=formdata)
+    #10.获取一个需要登陆后才能看到的页面，验证是否登陆成功
+    response = ss.get(&apos;https://www.zhihu.com/settings/profile&apos;,headers=headers).content
+
+    with open(&quot;shezhi.html&quot;, &quot;w&quot;) as f:
+            f.write(response)
+
+if __name__==&quot;__main__&quot;:
+    zhihu_login()
+</code></pre><h3 id="重点："><a href="#重点：" class="headerlink" title="重点："></a><strong>重点：</strong></h3><blockquote>
+<p><strong>1.登陆页面URL与在网页上看到的不一样，且要与post里面的账号类型相对应，可以通过抓包(推荐：Fiddler)获得</strong>  </p>
+<p><strong>2.一定要带cookie和_cxrf发出请求,跳过网站防跨站攻击验证(cxrf)</strong></p>
+<p><strong>3.验证码为手动输入，运行到输入验证码出，刷新文件夹，打开图片输入即可，后期可以加机器识别</strong>  </p>
+<p><strong>4.注意formdata里面不要加”captcha_type”：”cn”,否则，验证码为汉字！</strong>  </p>
+</blockquote>
+<h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/25/re正则表达式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈亚坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈亚坤的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/25/re正则表达式/" itemprop="url">
+                  re正则表达式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-25T11:51:39+08:00">
+                2017-06-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="正则表达式总结"><a href="#正则表达式总结" class="headerlink" title="正则表达式总结"></a>正则表达式总结</h2><h3 id="一、检验数字的表达式"><a href="#一、检验数字的表达式" class="headerlink" title="一、检验数字的表达式"></a><strong>一、检验数字的表达式</strong></h3><ol>
+<li><p>数字: ^[0-9]*$</p>
+<pre><code>#也可以写作 m = re.match(&quot;^\d*$&quot;,&quot;32873&quot;)
+m = re.match(&quot;^[0-9]*$&quot;,&quot;32873&quot;)
+print m.group()
+&gt;&gt;&gt;32873
+</code></pre></li>
+<li><p>n位的数字:^[\d]{n}$</p>
+<pre><code>m = re.match(&quot;^\d{4}$&quot;,&quot;4565&quot;)
+print m.group()
+&gt;&gt;&gt;4565
+</code></pre></li>
+<li><p>至少n位数字:^[\d]{n,}$</p>
+<pre><code>m = re.match(&quot;^\d{4,}$&quot;,&quot;453265&quot;)
+print m.group()
+&gt;&gt;&gt;453265
+</code></pre></li>
+<li><p>m-n位的数字:^[\d]{m,n}$</p>
+<pre><code>m = re.match(&quot;^\d{4,12}$&quot;,&quot;453266&quot;)
+print m.group()
+&gt;&gt;&gt;453266
+</code></pre></li>
+<li><p>零和非零开头的数字:^(0|[1-9][0-9]*)$ </p>
+<pre><code>#a=0,可以 a=0124 不可以
+m = re.match(&quot;^(0|[1-9][0-9]*)$&quot;,&quot;787&quot;)
+print m.group()
+</code></pre></li>
+<li><p>零和非零开头的数字，最多带两位小数数字：^(0|[1-9][0-9]*)+(.[0-9]{1,2})?$</p>
+<pre><code>m = re.match(&quot;^(0|[1-9][0-9]*)+(.[0-9]{1,2})?$&quot;,&quot;7850.04&quot;)
+print m.group()
+&gt;&gt;&gt;7850.04
+</code></pre></li>
+<li><p>带一到两位小数的整数或负数 :^(-)?\d+(.\d{1,2})?$</p>
+<pre><code>m = re.match(&quot;^(\-)?\d+(\.\d{1,2})?$&quot;,&quot;-7850.00&quot;)
+print m.group()
+&gt;&gt;&gt;-7850.00
+</code></pre></li>
+<li><p>整数，负数，小数: ^(-|+)?\d+(.\d+)?$</p>
+<pre><code>#有BUG，0既不是整数，也不是负数，单也可以匹配
+m = re.match(&quot;^(\-|\+)?\d+(\.\d+)?$&quot;,&quot;+0.2&quot;)
+print m.group()
+&gt;&gt;&gt;+0.2
+</code></pre></li>
+<li><p>有两位小数的正实数:^(\d+)+(.\d{2})$</p>
+<pre><code>m = re.match(&quot;^(\d+)+(\.\d{2})$&quot;,&quot;12.00&quot;)
+print m.group()
+&gt;&gt;&gt;12.00
+</code></pre></li>
+</ol>
+<p>10.有一到三位的正实数：^(\d+)+(.\d{1,3})$        </p>
+<pre><code>m = re.match(&quot;^(\d+)+(\.\d{1,3})$&quot;,&quot;12.000&quot;)
+print m.group()
+</code></pre><ol>
+<li><p>非零的正整数: ^(+)?[1-9]\d*$</p>
+<pre><code>m = re.match(&quot;^(\+)?[1-9]\d*$&quot;,&quot;+12&quot;)
+print m.group()
+&gt;&gt;&gt;+12
+</code></pre></li>
+</ol>
+<p>12.非零的负整数:^(+)?[1-9]\d*$</p>
+<pre><code>m = re.match(&quot;^(\-)[1-9]\d*$&quot;,&quot;-12&quot;)
+print m.group()
+&gt;&gt;&gt;-12
+</code></pre><p>13.非负整数： ^(+)?\d+$</p>
+<pre><code>m = re.match(&quot;^(\+)?\d+$&quot;,&quot;03&quot;)
+print m.group()
+&gt;&gt;&gt;03
+</code></pre><p>14.非正整数:^(-)\d+$</p>
+<pre><code>m = re.match(&quot;^(\-)\d+$&quot;,&quot;-3&quot;)
+print m.group()
+&gt;&gt;&gt;-3
+</code></pre><p>15.匹配ip</p>
+<pre><code>m = re.match(r&quot;^(?:(?:1[0-9][0-9]\.)|(?:2[0-4][0-9]\.)|(?:25[0-5]\.)|(?:[1-9][0-9]\.)|(?:[0-9]\.)){3}(?:(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])|(?:[1-9][0-9])|(?:[0-9]))$&quot;,&quot;153.145.24.3&quot;)
+#在findall时，有时需要去除开头与结尾限制，才能匹配到想要结果
+</code></pre><p>16.匹配邮箱</p>
+<pre><code>m = re.compile(r&quot;^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$&quot;)
+</code></pre><p>17.匹配电话</p>
+<pre><code>m = re.compile(r&quot;^1[3|4|5|7|8][0-9]\d{8}$&quot;)
+</code></pre>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/14/python语法糖/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈亚坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈亚坤的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/14/python语法糖/" itemprop="url">
+                  python中好玩的语法糖(1)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-14T00:44:48+08:00">
+                2017-06-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="python中的语法糖"><a href="#python中的语法糖" class="headerlink" title="python中的语法糖"></a><strong>python中的语法糖</strong></h1><h2 id="1-列表转换"><a href="#1-列表转换" class="headerlink" title="1.列表转换"></a>1.列表转换</h2><blockquote>
+<p>对于一个列表如list1 = [[1,2],[3,4,5],[6,7],[8,9]]要将其转化为list2 = [1,2,3,4,5,6,7,8,9]下面讨论其中三种方法：</p>
+</blockquote>
+<h3 id="一般方法"><a href="#一般方法" class="headerlink" title="一般方法"></a><strong>一般方法</strong></h3><pre><code>list1 = [[1,2],[3,4,5],[6,7],[8,9]]
+list2 = []
+for i in list1:
+    list2+=i
+print (list2)
+&gt;&gt;&gt;[1, 2, 3, 4, 5, 6, 7, 8, 9]
+</code></pre><h3 id="2-Pythonic的方法，列表推导式"><a href="#2-Pythonic的方法，列表推导式" class="headerlink" title="2.Pythonic的方法，列表推导式"></a><strong>2.Pythonic的方法，列表推导式</strong></h3><pre><code>list1 = [[1,2],[3,4,5],[6,7],[8,9]]
+list2 = [i   for k in list1  for i in k ]#使用两层列表推到式
+print(list2)
+&gt;&gt;&gt;[1, 2, 3, 4, 5, 6, 7, 8, 9]
+</code></pre><h3 id="3-调用sum-函数-好用但不推荐"><a href="#3-调用sum-函数-好用但不推荐" class="headerlink" title="3.调用sum()函数(好用但不推荐)"></a><strong>3.调用sum()函数(好用但不推荐)</strong></h3><pre><code>list1 = [[1,2],[3,4,5],[6,7],[8,9]]
+list2 = sum(list1,[])
+print(list2)
+&gt;&gt;&gt;[1, 2, 3, 4, 5, 6, 7, 8, 9]
+</code></pre><blockquote>
+<p>sum()函数：<br>sum(iterable[, start]) ，#iterable为可迭代对象<br>sum([ ], start)     #iterable为list列表<br>sum(( ), start )    #iterable为tuple元组<br>sum函数最后的值 = 可迭代对象里面的数相加的值 + start的值，其中start可以不写，默认为0</p>
+</blockquote>
+<pre><code>sum([1, 2, 3,], 4)
+&gt;&gt;&gt;10
+
+list1 = [[1,2],[3,4,5],[6,7],[8,9]]
+list2 = sum(list1,[1,8])
+print(list2)
+&gt;&gt;&gt;[1, 8, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+</code></pre><h3 id="4-sum-函数与列表推导式组合"><a href="#4-sum-函数与列表推导式组合" class="headerlink" title="4.sum()函数与列表推导式组合"></a><strong>4.sum()函数与列表推导式组合</strong></h3><pre><code>from math import sqrt
+a = range(1, 11)
+b = range(1, 10)
+c = sum([item for item in a if item in b])#sum([1,2,3,4,5,6,7,8,9],[])
+print c
+&gt;&gt;&gt;45
+</code></pre><h3 id="5大神代码"><a href="#5大神代码" class="headerlink" title="5大神代码"></a><strong>5大神代码</strong></h3><pre><code>from math import sqrt
+</code></pre><p>def sim_distance(prefs, person1, person2):</p>
+<pre><code># 得到shared_items的列表
+si = {}
+for item in prefs[person1]:
+    if item in prefs[person2]:
+        si[item] = 1
+
+# 如果两者没有共同之处，则返回0
+if len(si) == 0: return 0
+
+# 计算所有差值的平方和
+sum_of_squares = sum([pow(prefs[person1][item] - prefs[person2][item], 2) 
+                    for item in prefs[person1] if item in prefs[person2]])
+
+return 1/(1 + sqrt(sum_of_squares))
+</code></pre><h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
+<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="http://blog.csdn.net/cloume/article/details/65971925" target="_blank" rel="external">http://blog.csdn.net/cloume/article/details/65971925</a><br><a href="https://www.zhihu.com/question/57470958" target="_blank" rel="external">https://www.zhihu.com/question/57470958</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/11/Python中巧妙内置函数分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="陈亚坤">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="陈亚坤的Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/11/Python中巧妙内置函数分析/" itemprop="url">
+                  python内置函数分析(1)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posté le</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-11T02:01:12+08:00">
+                2017-06-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="python内置函数分析-1"><a href="#python内置函数分析-1" class="headerlink" title="python内置函数分析(1)"></a><strong>python内置函数分析(1)</strong></h1><blockquote>
+<p>PYTHON中内置了一些巧妙而强大的内置函数，熟练使用这些函数，代码不仅简洁易读了许多，既方便有减少了很多的BUG。</p>
+</blockquote>
+<h2 id="1-sorted"><a href="#1-sorted" class="headerlink" title="1.sorted()"></a><strong>1.sorted()</strong></h2><h3 id="1-对一个列表进行排序"><a href="#1-对一个列表进行排序" class="headerlink" title="1)对一个列表进行排序"></a><strong>1)对一个列表进行排序</strong></h3><pre><code>a = [100,82,12,55,45]
+sorted(a)
+&gt;&gt;&gt;[12,45,55,88,100]  
+
+#sorted()与sort()区别：
+#sorted()返回一个新的list，新的list基于小于运算符排列
+In [11]: a = [1,4,8,3,12]
+In [12]: b=sorted(a)
+In [13]: a
+Out[13]: [1, 4, 8, 3, 12]
+In [14]: b
+Out[14]: [1, 3, 4, 8, 12]
+#list.sort(),list本身被修改，通常不如soted()方便，如不需要原list，可以选用这种方法
+In [16]: a=[1,4,23,5,2] 
+In [17]: a.sort()
+In [18]: a
+Out[18]: [1, 2, 4, 5, 23]
+In [19]: b = a.sort()
+In [20]: b
+</code></pre><h3 id="2-通过key参数-函数"><a href="#2-通过key参数-函数" class="headerlink" title="2)通过key参数/函数"></a><strong>2)通过key参数/函数</strong></h3><p> 例：长列表中嵌套字典元素,按照每个元素的长度进行排序(这里使用匿名函数lambda)</p>
+<pre><code>list1 = [{2:6,8:2},{1:7},{1:2,5:12,9:2}]
+new_list = sorted(list1,key = lambda x:len(x))
+print(new_list)
+&gt;&gt;&gt;[{1: 7}, {8: 2, 2: 6}, {1: 2, 5: 12, 9: 2}]
+</code></pre><h3 id="3-对由tuple组成的list进行排序"><a href="#3-对由tuple组成的list进行排序" class="headerlink" title="3)对由tuple组成的list进行排序"></a><strong>3)对由tuple组成的list进行排序</strong></h3><p>例：对一群人里面的年龄的list进行排序</p>
+<pre><code>people = [(&apos;laownag&apos;,&apos;man&apos;,&apos;23&apos;),(&apos;xiaoli&apos;,&apos;woman&apos;,&apos;21&apos;),(&apos;xiaozhang&apos;,&apos;man&apos;,&apos;17&apos;)]
+new_people = sorted(people,key = lambda x:x[2])
+print(new_people)
+&gt;&gt;&gt;[(&apos;xiaozhang&apos;, &apos;man&apos;, &apos;17&apos;), (&apos;xiaoli&apos;, &apos;woman&apos;, &apos;21&apos;), (&apos;laownag&apos;, &apos;man&apos;, &apos;23&apos;)]
+</code></pre><h3 id="4-用cmp函数排序"><a href="#4-用cmp函数排序" class="headerlink" title="4)用cmp函数排序"></a><strong>4)用cmp函数排序</strong></h3><p>python3中，cmp函数被operator模块取代，需要导入<br>cmp(x,y),如果x&gt;y,返回1，x&lt;y,返回-1，x==y,返回0</p>
+<pre><code>people = [(&apos;laownag&apos;,&apos;man&apos;,&apos;23&apos;),(&apos;xiaoli&apos;,&apos;woman&apos;,&apos;21&apos;),(&apos;xiaozhang&apos;,&apos;man&apos;,&apos;17&apos;)]
+new_people = sorted(people,cmp = lambda x，y:cmp(x[0],y[0])))
+print(new_people)
+&gt;&gt;&gt;[(&apos;laownag&apos;, &apos;man&apos;, &apos;23&apos;), (&apos;xiaoli&apos;, &apos;woman&apos;, &apos;21&apos;), (&apos;xiaozhang&apos;, &apos;man&apos;, &apos;17&apos;)]
+</code></pre><h2 id="2-map"><a href="#2-map" class="headerlink" title="2.map()"></a><strong>2.map()</strong></h2><p>map函数跟根据提供的函数对制定序列做排序，接受一个函数f和一个list，并把函数f以此作用于每个list函数，然后返回一个新的list,map的函数的参数可以为多个，<strong>注意:这个函数一定要有返回值</strong></p>
+<pre><code>def func(x):
+    return x*x
+print(map(func([1,2,3,4,5])))
+&gt;&gt;&gt;[1, 4, 9, 16, 25]
+
+def add_x_y(x,y):
+return x+y
+print (map(add_x_y,[1,2,3,4,5],[2,3,4,5,6]))#必须len(x)==len(y)
+&gt;&gt;&gt;[3, 5, 7, 9, 11]
+</code></pre><h2 id="3-enumerate"><a href="#3-enumerate" class="headerlink" title="3.enumerate()"></a><strong>3.enumerate()</strong></h2><p>enumerate函数用于遍历序列中的元素以及它们的下标,多用于在for循环中得到计数,enumerate参数为可遍历的变量，如 字符串，列表等</p>
+<pre><code>#enumerate函数定义
+def enumerate(collection): 
+    &apos;Generates an indexed series: (0,coll[0]), (1,coll[1]) ...&apos;   
+       i = 0 
+       it = iter(collection) #将参数转换为可迭代对象
+       while 1: 
+       yield (i, it.next()) #生成迭代器
+       i += 1
+</code></pre><blockquote>
+<p>代码实现1</p>
+</blockquote>
+<pre><code>#代码实现1
+i = 0
+seq = [&apos;one&apos;, &apos;two&apos;, &apos;three&apos;]
+for element in seq:
+    print i, seq[i]
+    i += 1
+&gt;&gt;
+0 one
+1 two
+2 three
+</code></pre><blockquote>
+<p>代码实现2</p>
+</blockquote>
+<pre><code>#代码实现2
+seq = [&apos;one&apos;, &apos;two&apos;, &apos;three&apos;]
+for i, element in enumerate(seq):
+    print i, seq[i]
+&gt;&gt;
+0 one
+1 two
+2 three
+</code></pre><blockquote>
+<p>代码实现3</p>
+</blockquote>
+<pre><code>#代码实现3
+for i,j in enumerate(&apos;abc&apos;):
+print i,j
+
+&gt;&gt;
+0 a
+1 b
+2 c
+</code></pre><h2 id="4-zip"><a href="#4-zip" class="headerlink" title="4.zip()"></a><strong>4.zip()</strong></h2><blockquote>
+<p>zip函数接收人一多个(包括0或1)序列作为参数，返回一个tuple  </p>
+<p>示例1</p>
+</blockquote>
+<pre><code>x=[1,2,3]
+y=[4,5,6]
+z=[7,8,9]
+xyz=zip(x,y,z)
+print(xyz)
+&gt;&gt;&gt;[(1, 4, 7), (2, 5, 8), (3, 6, 9)]
+</code></pre><blockquote>
+<p>示例2</p>
+</blockquote>
+<pre><code>x = [1, 2, 3]
+y = [4, 5, 6, 7]
+xy = zip(x, y)
+print xy
+&gt;&gt;&gt;[(1, 4), (2, 5), (3, 6)]
+</code></pre><blockquote>
+<p>示例3</p>
+</blockquote>
+<pre><code>#示例3
+x = [1, 2, 3]
+y = [4, 5, 6]
+z = [7, 8, 9]
+xyz = zip(x, y, z)
+u = zip(*xyz)
+print u
+&gt;&gt;&gt;[(1, 2, 3), (4, 5, 6), (7, 8, 9)]
+</code></pre><blockquote>
+<p>一般认为这是一个unzip的过程，它的运行机制是这样的：<br>在运行zip(*xyz)之前，xyz的值是：[(1, 4, 7), (2, 5, 8), (3, 6, 9)]<br>那么，zip(*xyz) 等价于 zip((1, 4, 7), (2, 5, 8), (3, 6, 9))<br>所以，运行结果是：[(1, 2, 3), (4, 5, 6), (7, 8, 9)]</p>
+</blockquote>
+<pre><code>#示例4
+x = [1, 2, 3]
+r = zip(* [x] * 3)
+print r
+&gt;&gt;&gt;[(1, 1, 1), (2, 2, 2), (3, 3, 3)]
+</code></pre><p>&gt;<br>它的运行机制是这样的：<br>[x]生成一个列表的列表，它只有一个元素x<br>[x] * 3生成一个列表的列表，它有3个元素，[x, x, x]<br>zip(* [x] * 3)的意思就明确了，zip(x, x, x)  </p>
+<h2 id="5-filter"><a href="#5-filter" class="headerlink" title="5.filter()"></a><strong>5.filter()</strong></h2><blockquote>
+<p>filter函数是接收一函数f,和一个list，这个函数是对每个函数进行判断返回True或者False,依次来过滤掉一些不符合条件的元素，返回符合元素的list.<strong>跟if判断添加list相似</strong></p>
+</blockquote>
+<pre><code>def is_num(x):
+    return x%2==0
+print(filter(is_num,[1,2,3,4,5,6,7]))
+&gt;&gt;&gt;[2, 4, 6]
+</code></pre><blockquote>
+<p>处理文件时，把一些不需要的空格，回车，空字符去掉</p>
+</blockquote>
+<pre><code>def is_not_empty(x):
+&apos;strip() 方法用于移除字符串头尾指定的字符（默认为空格）&apos;
+    return x in len(x.strip())&gt;0#不返回空列表
+print(filter(is_not_empty,[&apos;abc&apos;,&apos;&apos;,&apos;book&apos;,&apos;apple&apos;,&apos;\t&apos;,&apos;\n&apos;]))
+&gt;&gt;&gt; [&apos;abc&apos;, &apos;book&apos;, &apos;apple&apos;]
+</code></pre><h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
+<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="https://zhuanlan.zhihu.com/p/26097557" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/26097557</a><br><a href="http://www.cnblogs.com/frydsh/archive/2012/07/10/2585370.html" target="_blank" rel="external">http://www.cnblogs.com/frydsh/archive/2012/07/10/2585370.html</a><br><a href="http://www.pythontab.com/html/2016/pythonjichu_1213/1111.html" target="_blank" rel="external">http://www.pythontab.com/html/2016/pythonjichu_1213/1111.html</a>  </p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -287,7 +1265,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-01T19:01:12+08:00">
                 2017-04-01
@@ -469,7 +1447,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-28T18:51:51+08:00">
                 2017-03-28
@@ -768,7 +1746,7 @@ print ret
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-23T19:02:37+08:00">
                 2017-03-23
@@ -889,7 +1867,7 @@ print ret
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-23T18:44:43+08:00">
                 2017-03-23
@@ -1021,8 +1999,8 @@ print ret
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -1034,8 +2012,8 @@ print ret
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -1085,11 +2063,11 @@ print ret
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
-  Theme -
+  Thème -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Muse
   </a>

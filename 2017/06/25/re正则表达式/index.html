@@ -109,7 +109,7 @@ print m.group()
 
 n位的数字:^[\d]{n}$
 m = re.m">
-<meta property="og:updated_time" content="2017-06-25T08:05:02.819Z">
+<meta property="og:updated_time" content="2017-08-01T03:13:28.449Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="re正则表达式">
 <meta name="twitter:description" content="正则表达式总结一、检验数字的表达式
@@ -220,7 +220,7 @@ m = re.m">
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Accueil
           </a>
         </li>
       
@@ -230,7 +230,7 @@ m = re.m">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Archives
           </a>
         </li>
       
@@ -307,7 +307,7 @@ m = re.m">
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Posté le</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-25T11:51:39+08:00">
                 2017-06-25
@@ -408,19 +408,22 @@ print m.group()
 <pre><code>m = re.match(&quot;^(\-)[1-9]\d*$&quot;,&quot;-12&quot;)
 print m.group()
 &gt;&gt;&gt;-12
-</code></pre><ol>
-<li><p>非负整数： ^(+)?\d+$</p>
+</code></pre><p>13.非负整数： ^(+)?\d+$</p>
 <pre><code>m = re.match(&quot;^(\+)?\d+$&quot;,&quot;03&quot;)
 print m.group()
 &gt;&gt;&gt;03
-</code></pre></li>
-<li><p>非正整数:^(-)\d+$</p>
+</code></pre><p>14.非正整数:^(-)\d+$</p>
 <pre><code>m = re.match(&quot;^(\-)\d+$&quot;,&quot;-3&quot;)
 print m.group()
 &gt;&gt;&gt;-3
-</code></pre></li>
-</ol>
-
+</code></pre><p>15.匹配ip</p>
+<pre><code>m = re.match(r&quot;^(?:(?:1[0-9][0-9]\.)|(?:2[0-4][0-9]\.)|(?:25[0-5]\.)|(?:[1-9][0-9]\.)|(?:[0-9]\.)){3}(?:(?:1[0-9][0-9])|(?:2[0-4][0-9])|(?:25[0-5])|(?:[1-9][0-9])|(?:[0-9]))$&quot;,&quot;153.145.24.3&quot;)
+#在findall时，有时需要去除开头与结尾限制，才能匹配到想要结果
+</code></pre><p>16.匹配邮箱</p>
+<pre><code>m = re.compile(r&quot;^[A-Za-zd]+([-_.][A-Za-zd]+)*@([A-Za-zd]+[-.])+[A-Za-zd]{2,5}$&quot;)
+</code></pre><p>17.匹配电话</p>
+<pre><code>m = re.compile(r&quot;^1[3|4|5|7|8][0-9]\d{8}$&quot;)
+</code></pre>
       
     </div>
 
@@ -523,10 +526,10 @@ print m.group()
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            Inhaltsverzeichnis
+            Table Des Matières
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            Übersicht
+            Ensemble
           </li>
         </ul>
       
@@ -546,8 +549,8 @@ print m.group()
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">Artikel</span>
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">articles</span>
               </a>
             </div>
           
@@ -559,8 +562,8 @@ print m.group()
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">12</span>
-                <span class="site-state-item-name">Tags</span>
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -626,11 +629,11 @@ print m.group()
 
 
 <div class="powered-by">
-  Erstellt mit  <a class="theme-link" href="https://hexo.io">Hexo</a>
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
 </div>
 
 <div class="theme-info">
-  Theme -
+  Thème -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Muse
   </a>

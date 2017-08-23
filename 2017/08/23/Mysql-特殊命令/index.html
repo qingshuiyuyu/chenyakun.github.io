@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="python,pytesseract,question," />
+  <meta name="keywords" content="Mysql," />
 
 
 
@@ -87,31 +87,25 @@
 
 
 
-<meta name="description" content="1.OSError: [Errno 2] No such file or directory
-原因：没有安装tesseract-ocr包  
-解决方案：sudo apt-get install tesseract-ocr
-
-作者：陈亚坤邮箱：cykstart@163.com版权声明:本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！
-参">
+<meta name="description" content="1. MySQL中删除重复数据只保留一条1.1查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断SELECT * FROM people WHERE peopleId IN (
+SELECT peopleId FROM people GROUP BY peopleId HAVING count(peopleId) &amp;gt; 1
+)
+1.2 查看某个字段是否是唯一值select">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pytesseract机器识别常见问题">
-<meta property="og:url" content="http://yoursite.com/2017/07/17/pytesseract机器识别常见问题/index.html">
+<meta property="og:title" content="Mysql 特殊命令">
+<meta property="og:url" content="http://yoursite.com/2017/08/23/Mysql-特殊命令/index.html">
 <meta property="og:site_name" content="陈亚坤的Blog">
-<meta property="og:description" content="1.OSError: [Errno 2] No such file or directory
-原因：没有安装tesseract-ocr包  
-解决方案：sudo apt-get install tesseract-ocr
-
-作者：陈亚坤邮箱：cykstart@163.com版权声明:本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！
-参">
-<meta property="og:updated_time" content="2017-07-17T06:56:23.992Z">
+<meta property="og:description" content="1. MySQL中删除重复数据只保留一条1.1查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断SELECT * FROM people WHERE peopleId IN (
+SELECT peopleId FROM people GROUP BY peopleId HAVING count(peopleId) &amp;gt; 1
+)
+1.2 查看某个字段是否是唯一值select">
+<meta property="og:updated_time" content="2017-08-23T15:55:35.815Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="pytesseract机器识别常见问题">
-<meta name="twitter:description" content="1.OSError: [Errno 2] No such file or directory
-原因：没有安装tesseract-ocr包  
-解决方案：sudo apt-get install tesseract-ocr
-
-作者：陈亚坤邮箱：cykstart@163.com版权声明:本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！
-参">
+<meta name="twitter:title" content="Mysql 特殊命令">
+<meta name="twitter:description" content="1. MySQL中删除重复数据只保留一条1.1查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断SELECT * FROM people WHERE peopleId IN (
+SELECT peopleId FROM people GROUP BY peopleId HAVING count(peopleId) &amp;gt; 1
+)
+1.2 查看某个字段是否是唯一值select">
 
 
 
@@ -139,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/07/17/pytesseract机器识别常见问题/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/08/23/Mysql-特殊命令/"/>
 
 
 
 
 
-  <title> pytesseract机器识别常见问题 | 陈亚坤的Blog </title>
+  <title> Mysql 特殊命令 | 陈亚坤的Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
@@ -264,7 +258,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/pytesseract机器识别常见问题/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/23/Mysql-特殊命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="陈亚坤">
@@ -285,7 +279,7 @@
             
             
               
-                pytesseract机器识别常见问题
+                Mysql 特殊命令
               
             
           </h1>
@@ -300,8 +294,8 @@
               
                 <span class="post-meta-item-text">Posté le</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-17T12:41:43+08:00">
-                2017-07-17
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-08-23T23:33:09+08:00">
+                2017-08-23
               </time>
             
 
@@ -336,12 +330,20 @@
       
 
       
-        <h3 id="1-OSError-Errno-2-No-such-file-or-directory"><a href="#1-OSError-Errno-2-No-such-file-or-directory" class="headerlink" title="1.OSError: [Errno 2] No such file or directory"></a>1.OSError: [Errno 2] No such file or directory</h3><blockquote>
-<p><strong>原因：没有安装tesseract-ocr包</strong>  </p>
-<p><strong>解决方案：sudo apt-get install tesseract-ocr</strong></p>
-</blockquote>
-<h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
-<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="http://blog.csdn.net/kezhen/article/details/42967789" target="_blank" rel="external">http://blog.csdn.net/kezhen/article/details/42967789</a></p>
+        <h2 id="1-MySQL中删除重复数据只保留一条"><a href="#1-MySQL中删除重复数据只保留一条" class="headerlink" title="1. MySQL中删除重复数据只保留一条"></a>1. MySQL中删除重复数据只保留一条</h2><h3 id="1-1查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断"><a href="#1-1查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断" class="headerlink" title="1.1查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断"></a>1.1查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断</h3><pre><code>SELECT * FROM people WHERE peopleId IN (
+SELECT peopleId FROM people GROUP BY peopleId HAVING count(peopleId) &gt; 1
+)
+</code></pre><h3 id="1-2-查看某个字段是否是唯一值"><a href="#1-2-查看某个字段是否是唯一值" class="headerlink" title="1.2 查看某个字段是否是唯一值"></a>1.2 查看某个字段是否是唯一值</h3><pre><code>select x,count(*) from xxx group by x having count(*)&gt;1;
+</code></pre><h3 id="1-3-删除表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断，只留有rowid最小的记录"><a href="#1-3-删除表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断，只留有rowid最小的记录" class="headerlink" title="1.3 删除表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断，只留有rowid最小的记录"></a>1.3 删除表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断，只留有rowid最小的记录</h3><pre><code>DELETE FROM people WHERE peopleName IN (
+SELECT peopleName FROM people GROUP BY peopleName HAVINGcount(peopleName) &gt; 1
+)
+AND peopleId NOT IN (SELECT min(peopleId) FROM people GROUP BY peopleName HAVING count(peopleName) &gt; 1
+)
+</code></pre><h3 id="1-4-查找表中多余的重复记录（多个字段）"><a href="#1-4-查找表中多余的重复记录（多个字段）" class="headerlink" title="1.4 查找表中多余的重复记录（多个字段）"></a>1.4 查找表中多余的重复记录（多个字段）</h3><pre><code>SELECT  * FROM  vitae a WHERE
+(a.peopleId, a.seq) IN ( SELECT  peopleId, seq FROM vitae GROUP BY
+peopleId, seq HAVING count(*) &gt; 1)
+</code></pre><h3 id="作者：陈亚坤"><a href="#作者：陈亚坤" class="headerlink" title="作者：陈亚坤"></a><strong>作者：陈亚坤</strong></h3><h3 id="邮箱：cykstart-163-com"><a href="#邮箱：cykstart-163-com" class="headerlink" title="邮箱：cykstart@163.com"></a><strong>邮箱：cykstart@163.com</strong></h3><h3 id="版权声明"><a href="#版权声明" class="headerlink" title="版权声明:"></a><strong>版权声明:</strong></h3><p>本篇博客仅作为参考学习资料，版权所有，侵权必删，请联系！部分代码取自互联网公开资料。版权归其所写个人/公司所有！</p>
+<h3 id="参考资料链接"><a href="#参考资料链接" class="headerlink" title="参考资料链接:"></a><strong>参考资料链接:</strong></h3><p><a href="http://blog.csdn.net/u014723529/article/details/51218638" target="_blank" rel="external">http://blog.csdn.net/u014723529/article/details/51218638</a><br><a href="http://www.jb51.net/article/23964.htm" target="_blank" rel="external">http://www.jb51.net/article/23964.htm</a></p>
 
       
     </div>
@@ -371,11 +373,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/python/" rel="tag"># python</a>
-          
-            <a href="/tags/pytesseract/" rel="tag"># pytesseract</a>
-          
-            <a href="/tags/question/" rel="tag"># question</a>
+            <a href="/tags/Mysql/" rel="tag"># Mysql</a>
           
         </div>
       
@@ -388,8 +386,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/14/随机生成多为密码字符串的python代码实现/" rel="next" title="随机生成多为密码字符串的python代码实现">
-                <i class="fa fa-chevron-left"></i> 随机生成多为密码字符串的python代码实现
+              <a href="/2017/08/23/Mysql-常见操作-索引操作/" rel="next" title="Mysql 常见操作-索引操作">
+                <i class="fa fa-chevron-left"></i> Mysql 常见操作-索引操作
               </a>
             
           </div>
@@ -397,10 +395,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/17/Phantomjs设置问题/" rel="prev" title="Phantomjs设置问题">
-                Phantomjs设置问题 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -520,7 +514,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-OSError-Errno-2-No-such-file-or-directory"><span class="nav-number">1.</span> <span class="nav-text">1.OSError: [Errno 2] No such file or directory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作者：陈亚坤"><span class="nav-number">2.</span> <span class="nav-text">作者：陈亚坤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邮箱：cykstart-163-com"><span class="nav-number">3.</span> <span class="nav-text">邮箱：cykstart@163.com</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版权声明"><span class="nav-number">4.</span> <span class="nav-text">版权声明:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料链接"><span class="nav-number">5.</span> <span class="nav-text">参考资料链接:</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-MySQL中删除重复数据只保留一条"><span class="nav-number">1.</span> <span class="nav-text">1. MySQL中删除重复数据只保留一条</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断"><span class="nav-number">1.1.</span> <span class="nav-text">1.1查找表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-查看某个字段是否是唯一值"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 查看某个字段是否是唯一值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-删除表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断，只留有rowid最小的记录"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 删除表中多余的重复记录，重复记录是根据单个字段（peopleId）来判断，只留有rowid最小的记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-查找表中多余的重复记录（多个字段）"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 查找表中多余的重复记录（多个字段）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作者：陈亚坤"><span class="nav-number">1.5.</span> <span class="nav-text">作者：陈亚坤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邮箱：cykstart-163-com"><span class="nav-number">1.6.</span> <span class="nav-text">邮箱：cykstart@163.com</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版权声明"><span class="nav-number">1.7.</span> <span class="nav-text">版权声明:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料链接"><span class="nav-number">1.8.</span> <span class="nav-text">参考资料链接:</span></a></li></ol></li></ol></div>
             
 
           </div>
